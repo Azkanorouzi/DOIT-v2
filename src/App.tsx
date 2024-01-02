@@ -1,15 +1,18 @@
-import FormLayout from './components/layout/FormLayout'
+import AppRoutes from './config/Routes'
 import MainNavbar from './components/navbar/MainNavbar'
-import { Button } from './components/ui/button'
-
+import { BrowserRouter } from 'react-router-dom'
+import { Provider } from 'react-redux'
+import store from './config/store'
 function App() {
   return (
-    <>
-      <MainNavbar />
-      <main className="bg-background dark h-screen">
-        <FormLayout />
-      </main>
-    </>
+    <Provider store={store}>
+      <BrowserRouter>
+        <MainNavbar />
+        <main className="bg-background dark h-screen">
+          <AppRoutes />
+        </main>
+      </BrowserRouter>
+    </Provider>
   )
 }
 
