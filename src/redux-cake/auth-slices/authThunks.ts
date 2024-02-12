@@ -8,6 +8,20 @@ import {
 } from 'firebase/auth'
 import { auth } from '@/config/Firebase'
 import { setError } from '@/utils/setError'
+const data = {
+  email: 'your@email.com',
+  password: 'yourPassword',
+}
+const url = 'https://localhost:8081'
+function signInWithEmailAndPassword() {
+  fetch(`${url}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  })
+}
 
 export const signUp = createAsyncThunk(
   'auth/signUp',
