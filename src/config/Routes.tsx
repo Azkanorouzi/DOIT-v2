@@ -5,6 +5,7 @@ import FormLayout from '@/components/layout/FormLayout'
 import TextLink from '@/components/ui/TextLink'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import useIsAuthenticated from '@/hooks/useIsAuthenticated'
+import HomeLayout from '@/components/layout/HomeLayout'
 
 export default function AppRoutes() {
   const isAuthenticated = useIsAuthenticated()
@@ -56,6 +57,7 @@ export default function AppRoutes() {
         }
         path="/login"
       />
+      <Route path="/home" element={<HomeLayout />} />
       <Route path="/dashboard" element={<DashboardLayout />} />
     </Routes>
   )

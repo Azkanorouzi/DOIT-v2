@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaDragon } from 'react-icons/fa6'
+import { FaDragon } from 'react-icons/fa'
 
 export default function DoitLogo() {
   return (

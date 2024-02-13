@@ -27,7 +27,7 @@ export default function MainNavbar() {
       centerContent={<DoitLogo></DoitLogo>}
       rightContent={
         <>
-          <NavbarButton to="/" text="Home" icon={<IoHomeOutline />} />
+          <NavbarButton to="/home" text="Home" icon={<IoHomeOutline />} />
           <NavbarButton to="/about" text="About" icon={<BsQuestionOctagon />} />
           <NavbarButton
             to="/dashboard"

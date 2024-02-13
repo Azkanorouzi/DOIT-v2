@@ -64,3 +64,18 @@ html {
 .card-shadow {
   box-shadow: 0px 0px 6px hsl(var(--primary));
 }
+
+.dropshadow-primary {
+  filter: drop-shadow(0 0 9rem hsl(var(--primary)));
+}
+
+.text-gradient-primary {
+  background: hsl(var(--primary));
+  background: linear-gradient(
+    to right,
+    hsl(var(--primary)) 0%,
+    hsl(var(--secondary)) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
