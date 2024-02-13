@@ -5,7 +5,6 @@ import LoginForm from '../login-signup/LoginForm'
 import SignUpForm from '../login-signup/SignUpForm'
 import useIsAuthenticated from '@/hooks/useIsAuthenticated'
 import LoginSuccess from '../login-signup/LoginSuccess'
-import AuthError from '../login-signup/authError'
 import { useSelector } from 'react-redux'
 
 export default function FormLayout({
@@ -19,7 +18,6 @@ export default function FormLayout({
   const isAuthenticated = useIsAuthenticated()
   return (
     <section className="h-screen flex items-center justify-center pt-10 flex-col gap-3 ">
-      {authErr && <AuthError message={authErr} />}
       {/* FormCard will present the actual form, and wrap it into a form card */}
       {!isAuthenticated ? (
         <FormCard

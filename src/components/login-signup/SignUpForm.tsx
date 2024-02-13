@@ -16,7 +16,6 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import FormError from './FormError'
 import { useState } from 'react'
-import { signUp } from '@/redux-cake/auth-slices/authThunks'
 import { useDispatch } from 'react-redux'
 
 const formSchema = z.object({
@@ -80,7 +79,7 @@ export default function SignUpForm() {
       return
     }
     const { password, email, username } = values
-    dispatch(signUp({ password, email, username }))
+    // dispatch(signUp({ password, email, username }))
   }
 
   return (

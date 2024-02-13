@@ -1,5 +1,4 @@
 'use client'
-import { logIn } from '@/redux-cake/auth-slices/authThunks'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -60,7 +59,7 @@ export default function LoginForm() {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { password, email } = values
-    dispatch(logIn({ password, email }))
+    //dispatch(logIn({ password, email }))
   }
 
   return (

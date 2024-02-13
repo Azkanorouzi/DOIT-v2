@@ -2,10 +2,8 @@ import { Button } from '../ui/button'
 import { useDispatch, useSelector } from 'react-redux'
 import useIsAuthenticated from '@/hooks/useIsAuthenticated'
 import { Navigate } from 'react-router-dom'
-import { logOut } from '@/redux-cake/auth-slices/authThunks'
 import Product from './Product'
 import { useEffect } from 'react'
-import { getProductsData } from '@/redux-cake/doit-slices/productThunks'
 import LoaderMin from '../ui/LoaderMin'
 
 export default function Dashboard() {
@@ -15,7 +13,7 @@ export default function Dashboard() {
   const product = useSelector(({ product }) => product.product)
   console.log(product)
   useEffect(() => {
-    if (isAuthorized) dispatch(getProductsData())
+    //if (isAuthorized) dispatch(getProductsData())
   }, [isAuthorized, dispatch])
 
   if (!isAuthorized) return <Navigate to={'/login'} />
@@ -28,9 +26,6 @@ export default function Dashboard() {
           <Product name={p.name} desc={p.desc} src={p.img} price={p.price} />
         )
       }) ?? <LoaderMin />}
-      <Button variant={'destructive'} onClick={() => dispatch(logOut())}>
-        Logout
-      </Button>
     </div>
   )
 }

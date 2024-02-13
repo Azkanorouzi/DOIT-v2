@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthError } from 'firebase/auth'
-import { logIn, logOut, signUp } from './authThunks'
+// import { logIn, logOut, signUp } from './authThunks'
 
 interface ProtectedUser {
   email: string | null
@@ -32,40 +32,40 @@ const authSlice = createSlice({
       state.authErr = action.payload
     },
   },
-  extraReducers: (builder) => {
-    builder
-      // Handling actions for logIn thunk
-      .addCase(signUp.pending, (state) => {
-        state.authLoading = true
-      })
-      .addCase(signUp.fulfilled, (state, action) => {
-        state.authLoading = false
-        state.user = action?.payload ?? state.user
-      })
-      .addCase(signUp.rejected, (state, action) => {
-        state.authLoading = false
-        state.authErr = action.error.message
-      })
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.authLoading = false
-        state.user = action?.payload ?? state.user
-      })
-      .addCase(logIn.rejected, (state, action) => {
-        state.authLoading = false
-        state.authErr = action.error.message
-      })
-      .addCase(logOut.pending, (state) => {
-        state.authLoading = true
-      })
-      .addCase(logOut.fulfilled, (state) => {
-        state.authLoading = false
-        state.user = null
-      })
-      .addCase(logOut.rejected, (state, action) => {
-        state.authLoading = false
-        state.authErr = action.error.message
-      })
-  },
+  // extraReducers: (builder) => {
+  //   builder
+  //     // Handling actions for logIn thunk
+  //     .addCase(signUp.pending, (state) => {
+  //       state.authLoading = true
+  //     })
+  //     .addCase(signUp.fulfilled, (state, action) => {
+  //       state.authLoading = false
+  //       state.user = action?.payload ?? state.user
+  //     })
+  //     .addCase(signUp.rejected, (state, action) => {
+  //       state.authLoading = false
+  //       state.authErr = action.error.message
+  //     })
+  //     .addCase(logIn.fulfilled, (state, action) => {
+  //       state.authLoading = false
+  //       state.user = action?.payload ?? state.user
+  //     })
+  //     .addCase(logIn.rejected, (state, action) => {
+  //       state.authLoading = false
+  //       state.authErr = action.error.message
+  //     })
+  //     .addCase(logOut.pending, (state) => {
+  //       state.authLoading = true
+  //     })
+  //     .addCase(logOut.fulfilled, (state) => {
+  //       state.authLoading = false
+  //       state.user = null
+  //     })
+  //     .addCase(logOut.rejected, (state, action) => {
+  //       state.authLoading = false
+  //       state.authErr = action.error.message
+  //     })
+  // },
 })
 
 export const { setUser, setAuthErr } = authSlice.actions
