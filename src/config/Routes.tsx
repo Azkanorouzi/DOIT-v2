@@ -57,7 +57,7 @@ export default function AppRoutes() {
         }
         path="/login"
       />
-      <Route path="/home" element={<HomeLayout />} />
+      <Route path="/" element={<HomeLayout />} />
       <Route path="/dashboard" element={<DashboardLayout />} />
     </Routes>
   )

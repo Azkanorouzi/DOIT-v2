@@ -10,6 +10,9 @@ import {
 import LoaderMin from '../ui/LoaderMin'
 import { useSelector } from 'react-redux'
 import { AuthState } from '@/redux-cake/auth-slices/authSlice'
+import { motion } from 'framer-motion'
+
+const MotionCard = motion(Card, { forwardMotionProps: true })
 
 export default function FormCard({
   title,
@@ -23,13 +26,18 @@ export default function FormCard({
   const { authLoading } = useSelector(({ auth }: { auth: AuthState }) => auth)
 
   return (
-    <Card className="dark bg-secondary text-primary border-primary shadow-primary flex  flex-col border-t-0 card-shadow w-[450px] relative ">
+    <MotionCard
+      className="dark bg-secondary text-primary border-primary shadow-primary flex  flex-col border-t-0 card-shadow w-[450px] relative "
+      initial={{ scaleX: 0 }}
+      animate={{ scaleX: 1 }}
+      key={Math.random()}
+    >
       {authLoading && <LoaderMin />}
       <CardHeader>
         <CardTitle className="text-primary text-3xl">{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>{form}</CardContent>
-    </Card>
+    </MotionCard>
   )
 }

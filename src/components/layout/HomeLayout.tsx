@@ -1,10 +1,10 @@
-import React from 'react'
+import { motion } from 'framer-motion'
 import Home from '../home/Home'
 
 export default function HomeLayout() {
   return (
-    <div className="pt-24 flex justify-center">
+    <motion.div className="pt-24 flex justify-center">
       <Home />
-    </div>
+    </motion.div>
   )
 }

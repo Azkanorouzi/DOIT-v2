@@ -6,6 +6,7 @@ import SignUpForm from '../login-signup/SignUpForm'
 import useIsAuthenticated from '@/hooks/useIsAuthenticated'
 import LoginSuccess from '../login-signup/LoginSuccess'
 import { useSelector } from 'react-redux'
+import { motion } from 'framer-motion'
 
 export default function FormLayout({
   link,
