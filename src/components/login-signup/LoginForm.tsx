@@ -1,7 +1,6 @@
 'use client'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
 import * as z from 'zod'
 import {
   Form,
@@ -15,7 +14,8 @@ import { Input } from '@/components/ui/input'
 import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import FormError from './FormError'
-import { AuthState } from '@/redux-cake/auth-slices/authSlice'
+import AccountsLogin from './AccountsLogin'
+import { useState } from 'react'
 
 const formSchema = z.object({
   email: z
@@ -40,9 +40,11 @@ const formSchema = z.object({
       }
     ),
 })
-export default function LoginForm() {
-  const dispatch = useDispatch()
-  const { authLoading } = useSelector(({ auth }: { auth: AuthState }) => auth)
+export default function LoginForm({
+  isMethodAccounts,
+}: {
+  isMethodAccounts: boolean
+}) {
   // const authState = useSelector(({ auth }: { auth: AuthState }) => auth)
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -52,14 +54,20 @@ export default function LoginForm() {
       password: '',
     },
   })
+  // Stores the selected account user wants
+  const [selectedAccount, setSelectedAccount] = useState('google')
+
+  function handleSelectedAccount(selected: string) {
+    setSelectedAccount(selected)
+  }
 
   const buttonDisabled =
-    Object.keys(form.formState.errors).length == 0 &&
-    Object.values(form.getValues()).every((val) => val.length)
+    (Object.keys(form.formState.errors).length == 0 &&
+      Object.values(form.getValues()).every((val) => val.length)) ||
+    isMethodAccounts
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { password, email } = values
-    //dispatch(logIn({ password, email }))
   }
 
   return (
@@ -68,53 +76,67 @@ export default function LoginForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-1"
       >
-        <div>
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input placeholder="johnDoe22" {...field} type="text" />
-                </FormControl>
-                {form?.formState?.errors?.email ? (
-                  <FormError />
-                ) : (
-                  <FormDescription>Your email account</FormDescription>
+        {isMethodAccounts ? (
+          <AccountsLogin
+            type="login"
+            setSelectedAccount={handleSelectedAccount}
+            selectedAccount={selectedAccount}
+          />
+        ) : (
+          <>
+            <div>
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="w-full">
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input placeholder="johnDoe22" {...field} type="text" />
+                    </FormControl>
+                    {form?.formState?.errors?.email ? (
+                      <FormError />
+                    ) : (
+                      <FormDescription>Your email account</FormDescription>
+                    )}
+                  </FormItem>
                 )}
-              </FormItem>
-            )}
-          />
-        </div>
-        <Separator />
-        <div className="flex flex-row gap-5">
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <>
-                <FormItem className="w-full ">
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="adf23Ajk" {...field} type="password" />
-                  </FormControl>
-                  {form?.formState?.errors?.password ? (
-                    <FormError />
-                  ) : (
-                    <FormDescription>Your password</FormDescription>
-                  )}
-                </FormItem>
-              </>
-            )}
-          />
-        </div>
-        <Separator />
+              />
+            </div>
+            <Separator />
+            <div className="flex flex-row gap-5">
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <>
+                    <FormItem className="w-full ">
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="adf23Ajk"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      {form?.formState?.errors?.password ? (
+                        <FormError />
+                      ) : (
+                        <FormDescription>Your password</FormDescription>
+                      )}
+                    </FormItem>
+                  </>
+                )}
+              />
+            </div>
+            <Separator />
+          </>
+        )}
         <div className="flex justify-center gap-2 pt-4">
           <Button
             variant={'destructive'}
             className="bg-primary"
-            disabled={!buttonDisabled || authLoading}
+            disabled={!buttonDisabled}
           >
             {' '}
             Login

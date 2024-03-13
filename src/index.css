@@ -79,3 +79,17 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.disappear {
+  animation: disappear 0.5s forwards;
+}
+
+@keyframes disappear {
+  90% {
+    opacity: 0;
+  }
+  to {
+    visibility: hidden;
+    opacity: 0;
+  }
+}

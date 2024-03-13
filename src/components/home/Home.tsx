@@ -46,7 +46,7 @@ export default function Home() {
               initial={{ scale: 0.9, opacity: 0.1 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.7 }}
-              onClick={() => {}}
+              onClick={() => navigate('/info')}
             >
               How does it work?
             </MotionButton>
@@ -55,8 +55,9 @@ export default function Home() {
               initial={{ scale: 0.9, opacity: 0.1 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.9 }}
+              onClick={() => navigate('/signup')}
             >
-              Sign up / Log in
+              Sign up
             </MotionButton>
             <MotionButton
               className="bg-foreground text-primary hover:bg-muted home-btn-3"

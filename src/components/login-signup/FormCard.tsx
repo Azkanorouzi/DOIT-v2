@@ -1,15 +1,6 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '../ui/card'
-import LoaderMin from '../ui/LoaderMin'
-import { useSelector } from 'react-redux'
-import { AuthState } from '@/redux-cake/auth-slices/authSlice'
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import { motion } from 'framer-motion'
 
 const MotionCard = motion(Card, { forwardMotionProps: true })
@@ -20,11 +11,9 @@ export default function FormCard({
   form,
 }: {
   title: string
-  description: string
+  description: string | ReactNode
   form: ReactNode
 }) {
-  const { authLoading } = useSelector(({ auth }: { auth: AuthState }) => auth)
-
   return (
     <MotionCard
       className="dark bg-secondary text-primary border-primary shadow-primary flex  flex-col border-t-0 card-shadow w-[450px] relative "
@@ -32,10 +21,9 @@ export default function FormCard({
       animate={{ scaleX: 1 }}
       key={Math.random()}
     >
-      {authLoading && <LoaderMin />}
       <CardHeader>
-        <CardTitle className="text-primary text-3xl">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardTitle className="text-primary text-3xl">{title} </CardTitle>
+        <div>{description}</div>
       </CardHeader>
       <CardContent>{form}</CardContent>
     </MotionCard>

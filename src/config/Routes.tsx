@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import FormLayout from '@/components/layout/FormLayout'
 import TextLink from '@/components/ui/TextLink'
 import DashboardLayout from '@/components/layout/DashboardLayout'
-import useIsAuthenticated from '@/hooks/useIsAuthenticated'
+import useIsAuthenticated from '@/hooks/useCurrentUser'
 import HomeLayout from '@/components/layout/HomeLayout'
 
 export default function AppRoutes() {
@@ -25,7 +25,7 @@ export default function AppRoutes() {
                 <TextLink
                   text="You're logged in now,"
                   link="Go to dashboard"
-                  to="/signup"
+                  to="/login"
                 />
               )
             }

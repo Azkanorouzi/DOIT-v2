@@ -1,72 +1,46 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AuthError } from 'firebase/auth'
-// import { logIn, logOut, signUp } from './authThunks'
+import { authApiSlice } from './authApiSlice'
+import supabase from '@/config/supabase'
 
-interface ProtectedUser {
-  email: string | null
-  emailVerified: boolean
-  uid: string
-}
-export interface AuthState {
-  user: ProtectedUser | null
-  authErr: AuthError | null | unknown
-  authLoading: boolean
-}
-const initialState: AuthState = {
-  user: null,
-  authErr: null,
-  authLoading: false,
-}
+export const extendedApiSlice = authApiSlice.injectEndpoints({
+  endpoints: (builder) => {
+    return {
+      // Sign in with email =======================
+      signUpWithEmail: builder.mutation({
+        queryFn: async ({ email, password, username }) => {
+          const { data, error } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                username,
+              },
+            },
+          })
 
-const authSlice = createSlice({
-  name: 'auth',
-  initialState,
-  reducers: {
-    setUser(state, action: PayloadAction<ProtectedUser | null>) {
-      state.user = action.payload
-    },
-    setAuthErr(state, action: PayloadAction<AuthError | null | unknown>) {
-      state.authErr = action.payload
-    },
-    setAuthLoading(state, action: PayloadAction<AuthError | null | unknown>) {
-      state.authErr = action.payload
-    },
+          if (error) throw { error }
+
+          return { data }
+        },
+        invalidatesTags: ['user'],
+      }),
+      // Getting the current user =======================
+      getCurUser: builder.query({
+        queryFn: async () => {
+          const { data: session } = await supabase.auth.getSession()
+          if (!session.session) return null
+          const { data, error } = await supabase.auth.getUser()
+          if (error) throw new Error(error.message)
+          return { data }
+        },
+      }),
+    }
   },
-  // extraReducers: (builder) => {
-  //   builder
-  //     // Handling actions for logIn thunk
-  //     .addCase(signUp.pending, (state) => {
-  //       state.authLoading = true
-  //     })
-  //     .addCase(signUp.fulfilled, (state, action) => {
-  //       state.authLoading = false
-  //       state.user = action?.payload ?? state.user
-  //     })
-  //     .addCase(signUp.rejected, (state, action) => {
-  //       state.authLoading = false
-  //       state.authErr = action.error.message
-  //     })
-  //     .addCase(logIn.fulfilled, (state, action) => {
-  //       state.authLoading = false
-  //       state.user = action?.payload ?? state.user
-  //     })
-  //     .addCase(logIn.rejected, (state, action) => {
-  //       state.authLoading = false
-  //       state.authErr = action.error.message
-  //     })
-  //     .addCase(logOut.pending, (state) => {
-  //       state.authLoading = true
-  //     })
-  //     .addCase(logOut.fulfilled, (state) => {
-  //       state.authLoading = false
-  //       state.user = null
-  //     })
-  //     .addCase(logOut.rejected, (state, action) => {
-  //       state.authLoading = false
-  //       state.authErr = action.error.message
-  //     })
-  // },
 })
 
-export const { setUser, setAuthErr } = authSlice.actions
-export default authSlice.reducer
+// returns the mutation result
+export const selectSignUpResult =
+  extendedApiSlice.endpoints.signUpWithEmail.select('auth')
+
+export const { useSignUpWithEmailMutation, useGetCurUserQuery } =
+  extendedApiSlice
+export default authApiSlice.reducer

@@ -16,7 +16,9 @@ import { Separator } from '../ui/separator'
 import { Button } from '../ui/button'
 import FormError from './FormError'
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import AccountsLogin from './AccountsLogin'
+import { useSignUpWithEmailMutation } from '@/redux-cake/auth-slices/authSlice'
+import LoaderMin from '../ui/LoaderMin'
 
 const formSchema = z.object({
   username: z
@@ -51,11 +53,22 @@ const formSchema = z.object({
     .refine((value) => /^\S+@\S+\.\S+$/.test(value), {
       message: 'Invalid email address format',
     }),
-  validationCode: z.string().length(4, 'Contains 4 numbers'),
 })
-export default function SignUpForm() {
+export default function SignUpForm({
+  isMethodAccounts,
+}: {
+  isMethodAccounts: boolean
+}) {
   const [notMatched, setNotMatched] = useState('')
-  const dispatch = useDispatch()
+  // To sign up the user
+  const [signUpWithEmail, { isLoading: isAuthLoading }] =
+    useSignUpWithEmailMutation()
+
+  const [selectedAccount, setSelectedAccount] = useState('google')
+
+  function handleSelectedAccount(selected: string) {
+    setSelectedAccount(selected)
+  }
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -65,162 +78,166 @@ export default function SignUpForm() {
       password: '',
       passwordRepeat: '',
       email: '',
-      validationCode: '0000',
     },
   })
   const buttonDisabled =
-    Object.keys(form.formState.errors).length == 0 &&
-    Object.values(form.getValues()).every((val) => val.length)
+    (Object.keys(form.formState.errors).length == 0 &&
+      Object.values(form.getValues()).every((val) => val.length)) ||
+    isMethodAccounts
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.password !== values.passwordRepeat) {
       setNotMatched('Password did not match')
       return
     }
     const { password, email, username } = values
     // dispatch(signUp({ password, email, username }))
+    await signUpWithEmail({
+      password,
+      email,
+      username,
+    }).unwrap()
   }
 
   return (
     <Form {...form}>
+      {isAuthLoading && <LoaderMin />}
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-1"
       >
-        <div>
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => {
-              return (
-                <FormItem className="w-full">
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="johnDoe22" {...field} type="text" />
-                  </FormControl>
-                  {form?.formState?.errors?.username ? (
-                    <FormError />
-                  ) : (
-                    <FormDescription>Your public username</FormDescription>
-                  )}
-                </FormItem>
-              )
-            }}
+        {isMethodAccounts ? (
+          <AccountsLogin
+            type="signup"
+            setSelectedAccount={handleSelectedAccount}
+            selectedAccount={selectedAccount}
           />
-        </div>
-        <Separator />
-        <div className="flex flex-row gap-5">
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <>
-                <FormItem className="w-full">
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="adf23Ajk" {...field} type="password" />
-                  </FormControl>
-                  {form?.formState?.errors?.password ? (
-                    <FormError />
-                  ) : (
-                    <FormDescription>Your account's password</FormDescription>
-                  )}
-                </FormItem>
-              </>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="passwordRepeat"
-            render={({ field }) => (
-              <>
-                <FormItem className="w-full">
-                  <FormLabel>Repeat password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="adf23Ajk" {...field} type="password" />
-                  </FormControl>
-                  {notMatched.length ? (
-                    <FormError customErr="Password did not match" />
-                  ) : form?.formState?.errors?.passwordRepeat ? (
-                    <FormError />
-                  ) : (
-                    <FormDescription>Your account's password</FormDescription>
-                  )}
-                </FormItem>
-              </>
-            )}
-          />
-        </div>
-        <Separator />
-        <div className="flex flex-col gap-2 ">
-          <div className="flex flex-row gap-4">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <>
-                  <FormItem className="w-full ">
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="johndoe@gmail.com"
-                        {...field}
-                        type="email"
-                      />
-                    </FormControl>
-                    {form?.formState?.errors?.email ? (
-                      <FormError />
-                    ) : (
-                      <FormDescription>
-                        Your Email account for signing in
-                      </FormDescription>
-                    )}
-                  </FormItem>
-                </>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="validationCode"
-              render={({ field }) => (
-                <>
-                  <FormItem className="w-full">
-                    <FormLabel>Validation code</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="8957"
-                        {...field}
-                        type="type"
-                        maxLength={4}
-                        minLength={4}
-                      />
-                    </FormControl>
-                    <FormDescription>
-                      Validation code sent to your email
-                    </FormDescription>
-                  </FormItem>
-                </>
-              )}
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <Button variant="link" className=" text-[13px] p-0" disabled>
-              {' '}
-              Receive code
-            </Button>
-          </div>
-        </div>
-        <Separator />
-        <div className="flex justify-center gap-2 pt-4">
-          <Button variant={'outline'} className="text-primary">
+        ) : (
+          <>
             {' '}
-            Cancel{' '}
-          </Button>
+            <div>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => {
+                  return (
+                    <FormItem className="w-full">
+                      <FormLabel>Username</FormLabel>
+                      <FormControl>
+                        <Input placeholder="johnDoe22" {...field} type="text" />
+                      </FormControl>
+                      {form?.formState?.errors?.username ? (
+                        <FormError />
+                      ) : (
+                        <FormDescription>Your public username</FormDescription>
+                      )}
+                    </FormItem>
+                  )
+                }}
+              />
+            </div>
+            <Separator />
+            <div className="flex flex-row gap-5">
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <>
+                    <FormItem className="w-full">
+                      <FormLabel>Password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="adf23Ajk"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      {form?.formState?.errors?.password ? (
+                        <FormError />
+                      ) : (
+                        <FormDescription>
+                          Your account's password
+                        </FormDescription>
+                      )}
+                    </FormItem>
+                  </>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="passwordRepeat"
+                render={({ field }) => (
+                  <>
+                    <FormItem className="w-full">
+                      <FormLabel>Repeat password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="adf23Ajk"
+                          {...field}
+                          type="password"
+                        />
+                      </FormControl>
+                      {notMatched.length ? (
+                        <FormError customErr="Password did not match" />
+                      ) : form?.formState?.errors?.passwordRepeat ? (
+                        <FormError />
+                      ) : (
+                        <FormDescription>
+                          Your account's password
+                        </FormDescription>
+                      )}
+                    </FormItem>
+                  </>
+                )}
+              />
+            </div>
+            <Separator />
+            <div className="flex flex-col gap-2 ">
+              <div className="flex flex-row gap-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <>
+                      <FormItem className="w-full ">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="johndoe@gmail.com"
+                            {...field}
+                            type="email"
+                          />
+                        </FormControl>
+                        {form?.formState?.errors?.email ? (
+                          <FormError />
+                        ) : (
+                          <FormDescription>
+                            Your Email account for signing in
+                          </FormDescription>
+                        )}
+                      </FormItem>
+                    </>
+                  )}
+                />
+              </div>
+            </div>
+            <Separator />
+          </>
+        )}
+
+        <div className="flex justify-center gap-2 pt-4">
+          {!isMethodAccounts && (
+            <Button variant={'outline'} className="text-primary">
+              {' '}
+              Cancel{' '}
+            </Button>
+          )}
+
           <Button
             variant={'destructive'}
             className="bg-primary"
-            disabled={!buttonDisabled}
+            disabled={!buttonDisabled || isAuthLoading}
           >
             {' '}
             Submit{' '}
