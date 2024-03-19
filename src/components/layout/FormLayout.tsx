@@ -16,7 +16,7 @@ export default function FormLayout({
   link: ReactNode
   type: 'signup' | 'login'
 }) {
-  const isAuthenticated = useIsAuthenticated()
+  const { isAuthenticated } = useIsAuthenticated()
   // Gets the specified param from url
   const paramValue = useGetSearchParams('method')
   const isMethodAccounts = paramValue === 'accounts'

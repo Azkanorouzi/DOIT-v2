@@ -228,7 +228,14 @@ export default function SignUpForm({
 
         <div className="flex justify-center gap-2 pt-4">
           {!isMethodAccounts && (
-            <Button variant={'outline'} className="text-primary">
+            <Button
+              variant={'outline'}
+              className="text-primary"
+              type="reset"
+              onClick={function () {
+                form.reset()
+              }}
+            >
               {' '}
               Cancel{' '}
             </Button>

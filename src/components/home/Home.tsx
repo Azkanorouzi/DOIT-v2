@@ -1,14 +1,15 @@
-import React from 'react'
 import { FaDragon } from 'react-icons/fa'
 
 import { motion } from 'framer-motion'
 import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
+import useCurrentUser from '@/hooks/useCurrentUser'
 
 // Animated components using framer motion
 const MotionButton = motion(Button, { forwardMotionProps: true })
 
 export default function Home() {
+  const { isAuthenticated } = useCurrentUser()
   const navigate = useNavigate()
   return (
     <div className="relative  overflow-hidden w-screen h-screen flex justify-center  max-w-[1800px] max-h[3000px]">
@@ -46,27 +47,42 @@ export default function Home() {
               initial={{ scale: 0.9, opacity: 0.1 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ delay: 0.7 }}
-              onClick={() => navigate('/info')}
+              onClick={() => navigate('/about')}
             >
               How does it work?
             </MotionButton>
-            <MotionButton
-              className="home-btn-2"
-              initial={{ scale: 0.9, opacity: 0.1 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.9 }}
-              onClick={() => navigate('/signup')}
-            >
-              Sign up
-            </MotionButton>
-            <MotionButton
-              className="bg-foreground text-primary hover:bg-muted home-btn-3"
-              initial={{ scale: 0.9, opacity: 0.1 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 1.1 }}
-            >
-              Dashboard
-            </MotionButton>
+            {!isAuthenticated && (
+              <MotionButton
+                className="home-btn-2"
+                initial={{ scale: 0.9, opacity: 0.1 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 0.9 }}
+                onClick={() => navigate('/signup')}
+              >
+                Sign up
+              </MotionButton>
+            )}
+            {!isAuthenticated && (
+              <MotionButton
+                className="bg-foreground text-primary hover:bg-muted home-btn-3"
+                initial={{ scale: 0.9, opacity: 0.1 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 1.1 }}
+                onClick={() => navigate('/login')}
+              >
+                Login
+              </MotionButton>
+            )}
+            {isAuthenticated && (
+              <MotionButton
+                className="bg-foreground text-primary hover:bg-muted home-btn-3"
+                initial={{ scale: 0.9, opacity: 0.1 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 1.1 }}
+              >
+                Dashboard
+              </MotionButton>
+            )}
           </div>
         </div>
       </div>

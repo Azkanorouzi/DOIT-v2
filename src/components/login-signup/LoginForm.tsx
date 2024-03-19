@@ -16,6 +16,8 @@ import { Button } from '../ui/button'
 import FormError from './FormError'
 import AccountsLogin from './AccountsLogin'
 import { useState } from 'react'
+import { useLoginMutation } from '@/redux-cake/auth-slices/authSlice'
+import LoaderMin from '../ui/LoaderMin'
 
 const formSchema = z.object({
   email: z
@@ -45,6 +47,8 @@ export default function LoginForm({
 }: {
   isMethodAccounts: boolean
 }) {
+  // Stores the selected account user wants
+  const [selectedAccount, setSelectedAccount] = useState('google')
   // const authState = useSelector(({ auth }: { auth: AuthState }) => auth)
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
@@ -54,8 +58,8 @@ export default function LoginForm({
       password: '',
     },
   })
-  // Stores the selected account user wants
-  const [selectedAccount, setSelectedAccount] = useState('google')
+
+  const [login, { isLoading }] = useLoginMutation()
 
   function handleSelectedAccount(selected: string) {
     setSelectedAccount(selected)
@@ -68,6 +72,8 @@ export default function LoginForm({
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const { password, email } = values
+    // Logging in
+    login({ password, email })
   }
 
   return (
@@ -76,6 +82,7 @@ export default function LoginForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-1"
       >
+        {isLoading && <LoaderMin />}
         {isMethodAccounts ? (
           <AccountsLogin
             type="login"
@@ -133,6 +140,19 @@ export default function LoginForm({
           </>
         )}
         <div className="flex justify-center gap-2 pt-4">
+          {!isMethodAccounts && (
+            <Button
+              variant={'outline'}
+              className="text-primary"
+              type="reset"
+              onClick={function () {
+                form.reset()
+              }}
+            >
+              {' '}
+              Cancel{' '}
+            </Button>
+          )}
           <Button
             variant={'destructive'}
             className="bg-primary"
