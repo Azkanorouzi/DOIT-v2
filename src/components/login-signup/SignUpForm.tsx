@@ -19,6 +19,7 @@ import { useState } from 'react'
 import AccountsLogin from './AccountsLogin'
 import { useSignUpWithEmailMutation } from '@/redux-cake/auth-slices/authSlice'
 import LoaderMin from '../ui/LoaderMin'
+import { useNavigate } from 'react-router-dom'
 
 const formSchema = z.object({
   username: z
@@ -59,6 +60,7 @@ export default function SignUpForm({
 }: {
   isMethodAccounts: boolean
 }) {
+  const navigate = useNavigate()
   const [notMatched, setNotMatched] = useState('')
   // To sign up the user
   const [signUpWithEmail, { isLoading: isAuthLoading }] =
@@ -93,11 +95,12 @@ export default function SignUpForm({
     }
     const { password, email, username } = values
     // dispatch(signUp({ password, email, username }))
-    await signUpWithEmail({
+    const { user } = await signUpWithEmail({
       password,
       email,
       username,
     }).unwrap()
+    if (user?.role === 'authenticated') navigate('/dashboard')
   }
 
   return (

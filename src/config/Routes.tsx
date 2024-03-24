@@ -8,12 +8,13 @@ import HomeLayout from '@/components/layout/HomeLayout'
 import ProfileLayout from '@/components/layout/ProfileLayout'
 import ProtectedRoute from '@/components/ui/ProtectedRoute'
 
-import P404 from '@/components/ui/p404'
 import UnauthorizedPage from '@/components/ui/UnauthorizedPage'
 import InboxLayout from '@/components/layout/InboxLayout'
+import P404 from '@/components/ui/P404'
 
 export default function AppRoutes() {
   const { isAuthenticated } = useIsAuthenticated()
+
   return (
     <Routes>
       <Route

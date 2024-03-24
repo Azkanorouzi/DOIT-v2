@@ -1,5 +1,6 @@
 import useCurrentUser from '@/hooks/useCurrentUser'
 import { ReactNode } from 'react'
+import toast from 'react-hot-toast'
 import { Navigate } from 'react-router-dom'
 
 export default function ProtectedRoute({
@@ -11,11 +12,15 @@ export default function ProtectedRoute({
   navigateTo: string
   placeholder: ReactNode
 }) {
-  const { isAuthenticated, email, isLoading } = useCurrentUser()
-  console.log(isAuthenticated, email, 'isauthenticate')
-
+  const { isAuthenticated, isLoading } = useCurrentUser()
+  console.log(!isAuthenticated, !isLoading, 'should navigate')
   // Redirection
-  if (!isAuthenticated && !isLoading) return <Navigate to={navigateTo} />
+  if (!isAuthenticated && !isLoading) {
+    toast('you need to login to access this page!', {
+      icon: '🚫',
+    })
+    return <Navigate to={navigateTo} />
+  }
 
   return (
     <>

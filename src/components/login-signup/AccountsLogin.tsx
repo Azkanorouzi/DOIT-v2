@@ -1,6 +1,6 @@
-import { FaGithub, FaGoogle } from 'react-icons/fa'
-import SelectionBox from '../ui/selectionBox'
-import { FaApple } from 'react-icons/fa'
+import { FaGithub } from 'react-icons/fa'
+
+import SelectionBox from '../ui/SelectionBox'
 
 export default function AccountsLogin({
   type,
@@ -20,11 +20,11 @@ export default function AccountsLogin({
         setSelectedAccount={setSelectedAccount}
       >
         {/* Google */}
-        <SelectionBox.Item className="bg-popover " name={'google'}>
+        {/* <SelectionBox.Item className="bg-popover " name={'google'}>
           <FaGoogle className="text-2xl" />
           <p>{type} with google</p>
           <div></div>
-        </SelectionBox.Item>
+        </SelectionBox.Item> */}
         {/* Github */}
         <SelectionBox.Item className="bg-popover " name={'github'}>
           <FaGithub className="text-2xl" />
@@ -32,11 +32,11 @@ export default function AccountsLogin({
           <div></div>
         </SelectionBox.Item>
         {/* Apple */}
-        <SelectionBox.Item className="bg-popover " name={'apple'}>
+        {/* <SelectionBox.Item className="bg-popover " name={'apple'}>
           <FaApple className="text-2xl" />
           <p>{type} with apple id</p>
           <div></div>
-        </SelectionBox.Item>
+        </SelectionBox.Item> */}
       </SelectionBox>
     </article>
   )

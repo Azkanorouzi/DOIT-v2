@@ -16,8 +16,12 @@ import { Button } from '../ui/button'
 import FormError from './FormError'
 import AccountsLogin from './AccountsLogin'
 import { useState } from 'react'
-import { useLoginMutation } from '@/redux-cake/auth-slices/authSlice'
+import {
+  useLoginMutation,
+  useLoginWithGithubMutation,
+} from '@/redux-cake/auth-slices/authSlice'
 import LoaderMin from '../ui/LoaderMin'
+import { useNavigate } from 'react-router-dom'
 
 const formSchema = z.object({
   email: z
@@ -48,18 +52,20 @@ export default function LoginForm({
   isMethodAccounts: boolean
 }) {
   // Stores the selected account user wants
-  const [selectedAccount, setSelectedAccount] = useState('google')
-  // const authState = useSelector(({ auth }: { auth: AuthState }) => auth)
+  const [selectedAccount, setSelectedAccount] = useState('github')
+  const navigate = useNavigate()
+  const [login, { isLoading }] = useLoginMutation()
+  const [loginWithGithub, { isLoading: isLoginGithubLoading }] =
+    useLoginWithGithubMutation()
+
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: '',
-      password: '',
+      email: isMethodAccounts ? 'testtest@gmail.com' : '',
+      password: isMethodAccounts ? 'testtest1234' : '',
     },
   })
-
-  const [login, { isLoading }] = useLoginMutation()
 
   function handleSelectedAccount(selected: string) {
     setSelectedAccount(selected)
@@ -68,13 +74,26 @@ export default function LoginForm({
   const buttonDisabled =
     (Object.keys(form.formState.errors).length == 0 &&
       Object.values(form.getValues()).every((val) => val.length)) ||
-    isMethodAccounts
+    (isMethodAccounts && selectedAccount.length)
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    if (isMethodAccounts) {
+      alert('hi')
+      const res = await loginWithGithub({}).unwrap()
+      // if (user?.role === 'authenticated') navigate('/profile')
+      return
+    }
+
     const { password, email } = values
     // Logging in
-    login({ password, email })
+    const { user } = await login({ password, email }).unwrap()
+    // Navigating the user if it was successful
+    if (user?.role === 'authenticated') navigate('/profile')
   }
+
+  // async function onSubmitAccount() {
+
+  // }
 
   return (
     <Form {...form}>
@@ -82,7 +101,7 @@ export default function LoginForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-1"
       >
-        {isLoading && <LoaderMin />}
+        {(isLoading || isLoginGithubLoading) && <LoaderMin />}
         {isMethodAccounts ? (
           <AccountsLogin
             type="login"

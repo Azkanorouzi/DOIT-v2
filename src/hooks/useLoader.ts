@@ -11,7 +11,10 @@ export function useRemoveLoader({
 }) {
   useEffect(() => {
     const loader = document.querySelector(selectorClass)
-    if (isLoading) loader.classList.remove('hidden')
+    if (isLoading) {
+      loader?.classList?.remove('hidden')
+      loader?.classList?.remove(animationClass)
+    }
     if (!isLoading) loader?.classList?.add(animationClass)
   }, [isLoading, animationClass, selectorClass])
 }

@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import { authApiSlice } from './authApiSlice'
 import supabase from '@/config/supabase'
 
@@ -17,8 +18,13 @@ export const extendedApiSlice = authApiSlice.injectEndpoints({
             },
           })
 
-          if (error) throw { error }
-
+          if (error) {
+            // hot toast
+            toast.error(`We had trouble signing you up, ${error.message}`)
+            throw { error }
+          }
+          // Hot toast
+          toast.success('Sign up was successful')
           return { data }
         },
         invalidatesTags: ['user'],
@@ -30,7 +36,10 @@ export const extendedApiSlice = authApiSlice.injectEndpoints({
             await supabase.auth.getSession()
           if (!session.session) return { error: sessionError }
           const { data, error } = await supabase.auth.getUser()
-          if (error) throw new Error(error?.message)
+          if (error) {
+            throw new Error(error?.message)
+          }
+
           return { data }
         },
         providesTags: ['user'],
@@ -39,7 +48,13 @@ export const extendedApiSlice = authApiSlice.injectEndpoints({
       logoutUser: builder.mutation({
         queryFn: async () => {
           const { error } = await supabase.auth.signOut()
-          if (error) throw new Error(error?.message)
+          if (error) {
+            // hot toast
+            toast.error(`We had trouble logging out, ${error.message}`)
+            throw new Error(error?.message)
+          }
+          // hot toast
+          toast.success(`You're now logged out`)
           return { data: {} }
         },
         invalidatesTags: ['user'],
@@ -51,10 +66,34 @@ export const extendedApiSlice = authApiSlice.injectEndpoints({
             email,
             password,
           })
-          if (error) throw new Error(error?.message)
-          return { data }
+          if (error) {
+            toast.error(
+              `We had trouble logging into your account, ${error.message} `
+            )
+            throw new Error(error?.message)
+          }
+
+          toast.success('Login success')
+          return { data, isSuccess: true }
         },
         invalidatesTags: ['user'],
+      }),
+      // Login with github =================
+      loginWithGithub: builder.mutation({
+        queryFn: async () => {
+          const { error, data } = await supabase.auth.signInWithOAuth({
+            provider: 'github',
+          })
+
+          if (error) {
+            toast.error(
+              `Failed to login with your github account ${error.message}`
+            )
+            throw new Error(error.message)
+          }
+          toast.success('Login success')
+          return { data }
+        },
       }),
     }
   },
@@ -69,5 +108,6 @@ export const {
   useGetCurUserQuery,
   useLogoutUserMutation,
   useLoginMutation,
+  useLoginWithGithubMutation,
 } = extendedApiSlice
 export default authApiSlice.reducer

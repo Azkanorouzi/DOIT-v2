@@ -5,8 +5,6 @@ import GoBack from './GoBackButton'
 export default function P404() {
   const navigate = useNavigate()
 
-  console.log(location)
-
   return (
     <section>
       <div className="grid place-content-center h-screen text-center">
