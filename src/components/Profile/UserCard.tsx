@@ -1,6 +1,8 @@
 import { FaUserCircle } from 'react-icons/fa'
 import LogoutButton from '../ui/LogoutBtn'
 import { motion } from 'framer-motion'
+import ToolTipContainer from '../ui/ToolTipContainer'
+import ToolTipPopUp from '../ui/ToolTipPopUp'
 
 export default function UserCard({ data }) {
   return (
@@ -11,20 +13,42 @@ export default function UserCard({ data }) {
       animate={{ opacity: 1, translateX: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <motion.div
-        initial={{ scale: 0.9, opacity: 0.5 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.4, delay: 0.4 }}
+      <ToolTipContainer
+        text={<ToolTipPopUp text="Change your profile picture" />}
       >
-        <FaUserCircle className="w-20 h-20 rounded-full text-primary hover:text-primary-foreground transition-colors cursor-pointer" />
-      </motion.div>
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0.5 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
+          <FaUserCircle className="w-20 h-20 rounded-full text-primary hover:text-primary-foreground transition-colors cursor-pointer" />
+        </motion.div>
+      </ToolTipContainer>
       <div>
-        <motion.p className="text-2xl text-primary" animate={{}}>
+        <motion.p
+          className="text-2xl text-primary"
+          initial={{ translateY: '10px', opacity: 0.5 }}
+          animate={{ translateY: '0px', opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
+        >
           {data?.username}
         </motion.p>
-        <p>{data?.email}</p>
+        <motion.p
+          initial={{ translateY: '10px', opacity: 0.5 }}
+          animate={{ translateY: '0px', opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.8 }}
+        >
+          {data?.email}
+        </motion.p>
         {/* Todo */}
-        <p className="text-primary">Account Type: Normal</p>
+        <motion.p
+          className="text-primary"
+          initial={{ translateY: '10px', opacity: 0.5 }}
+          animate={{ translateY: '0px', opacity: 1 }}
+          transition={{ duration: 0.4, delay: 1 }}
+        >
+          Account Type: Normal
+        </motion.p>
       </div>
 
       <div className="self-bottom pt-7">

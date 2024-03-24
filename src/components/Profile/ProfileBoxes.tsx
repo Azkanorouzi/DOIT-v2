@@ -14,6 +14,7 @@ export default function ProfileBoxes() {
           amount="0"
           icon={<IoMdDoneAll className="text-5xl" />}
           text="Done"
+          animationDelay={0.3}
         />
         {/* box */}
         <InfoBox
@@ -21,6 +22,7 @@ export default function ProfileBoxes() {
           icon={<TfiTarget className="text-4xl" />}
           text="Focused"
           style="border-primary-foreground text-primary-foreground"
+          animationDelay={0.7}
         />
         {/* box */}
         <InfoBox
@@ -28,6 +30,7 @@ export default function ProfileBoxes() {
           icon={<FaGem className="text-4xl" />}
           text="Gem"
           style="border-destructive text-primary"
+          animationDelay={0.5}
         />
       </div>
       <div className="flex gap-5 z-10">
@@ -37,6 +40,7 @@ export default function ProfileBoxes() {
           icon={<FaUserFriends className="text-5xl" />}
           text="Connections"
           style="border-none bg-primary text-primary-foreground"
+          animationDelay={0.1}
         />
         {/* box */}
         <InfoBox
@@ -44,6 +48,7 @@ export default function ProfileBoxes() {
           icon={<SlOrganization className="text-5xl" />}
           text="Organizations"
           style="border-none text-primary bg-primary-foreground"
+          animationDelay={0.8}
         />
         {/* box */}
         <InfoBox
@@ -51,6 +56,7 @@ export default function ProfileBoxes() {
           icon={<LuCrown className="text-4xl " />}
           text="Rank"
           style="border-none text-primary-foreground bg-destructive"
+          animationDelay={0.7}
         />
       </div>
     </div>

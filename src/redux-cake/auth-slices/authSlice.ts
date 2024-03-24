@@ -1,8 +1,8 @@
 import toast from 'react-hot-toast'
-import { authApiSlice } from './authApiSlice'
+import { apiSlice } from '../apiSlice'
 import supabase from '@/config/supabase'
 
-export const extendedApiSlice = authApiSlice.injectEndpoints({
+export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => {
     return {
       // Sign in with email =======================
@@ -14,6 +14,11 @@ export const extendedApiSlice = authApiSlice.injectEndpoints({
             options: {
               data: {
                 username,
+                // Default background
+                background:
+                  'https://bajredxtbeceozencuse.supabase.co/storage/v1/object/sign/profile/default-bg.jpg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJwcm9maWxlL2RlZmF1bHQtYmcuanBnIiwiaWF0IjoxNzExMjk0NzQwLCJleHAiOjQ4NjQ4OTQ3NDB9.075o3ll_45PNrDUYxK80KKnCdbX7McTOo96hryKYKE8&t=2024-03-24T15%3A39%3A00.546Z',
+                // Profile picture
+                profile: '',
               },
             },
           })
@@ -110,4 +115,4 @@ export const {
   useLoginMutation,
   useLoginWithGithubMutation,
 } = extendedApiSlice
-export default authApiSlice.reducer
+export default apiSlice.reducer
