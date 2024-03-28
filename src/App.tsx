@@ -22,7 +22,6 @@ function App() {
   })
 
   useEffect(() => {
-    console.log(data)
     !isGettingCurrentUser &&
       isAuthenticated &&
       sayHi(isAuthenticated, data?.username)

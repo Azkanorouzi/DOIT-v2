@@ -5,23 +5,33 @@ import ToolTipContainer from '../ui/ToolTipContainer'
 import ToolTipPopUp from '../ui/ToolTipPopUp'
 
 export default function UserCard({ data }) {
+  console.log(data, 'this is data')
   return (
     <motion.article
-      className="z-10 absolute top-[290px] left-[180px] flex justify-center items-center gap-8 p-5 rounded-xl backdrop-blur-md border shadow-sm pr-20"
+      className="z-10 mt-60 lg:mt-0 lg:absolute top-[290px] lg:left-[180px] flex justify-center items-center lg:gap-8 text-center  mx-auto lg:text-left p-5 rounded-xl backdrop-blur-md border shadow-sm lg:pr-20 flex-col lg:flex-row"
       whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
       initial={{ opacity: 0.2, translateX: -100 }}
       animate={{ opacity: 1, translateX: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <ToolTipContainer
-        text={<ToolTipPopUp text="Change your profile picture" />}
-      >
+      <ToolTipContainer text={<ToolTipPopUp text="Your profile picture" />}>
         <motion.div
           initial={{ scale: 0.9, opacity: 0.5 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
         >
-          <FaUserCircle className="w-20 h-20 rounded-full text-primary hover:text-primary-foreground transition-colors cursor-pointer" />
+          {data?.profile?.length ? (
+            <div
+              className="w-20 h-20 rounded-full"
+              style={{
+                backgroundImage: `url(${data?.profile})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
+            ></div>
+          ) : (
+            <FaUserCircle className="w-20 h-20 rounded-full text-primary hover:text-primary-foreground transition-colors cursor-pointer" />
+          )}
         </motion.div>
       </ToolTipContainer>
       <div>

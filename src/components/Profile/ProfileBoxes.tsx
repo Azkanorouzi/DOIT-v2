@@ -7,8 +7,8 @@ import { LuCrown } from 'react-icons/lu'
 
 export default function ProfileBoxes() {
   return (
-    <div className=" mt-36 ml-36  flex gap-5 flex-col pb-10">
-      <div className="z-10 flex gap-5">
+    <div className=" mt-10 lg:mt-36 lg:ml-36   flex gap-5 flex-row lg:flex-col pb-10">
+      <div className="z-10 flex gap-5 flex-col lg:flex-row">
         {/* box */}
         <InfoBox
           amount="0"
@@ -33,7 +33,7 @@ export default function ProfileBoxes() {
           animationDelay={0.5}
         />
       </div>
-      <div className="flex gap-5 z-10">
+      <div className="flex gap-5 z-10 flex-col lg:flex-row">
         {/* box */}
         <InfoBox
           amount="0"
@@ -56,7 +56,7 @@ export default function ProfileBoxes() {
           icon={<LuCrown className="text-4xl " />}
           text="Rank"
           style="border-none text-primary-foreground bg-destructive"
-          animationDelay={0.7}
+          animationDelay={1.1}
         />
       </div>
     </div>

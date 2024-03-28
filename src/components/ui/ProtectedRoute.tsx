@@ -13,7 +13,6 @@ export default function ProtectedRoute({
   placeholder: ReactNode
 }) {
   const { isAuthenticated, isLoading } = useCurrentUser()
-  console.log(!isAuthenticated, !isLoading, 'should navigate')
   // Redirection
   if (!isAuthenticated && !isLoading) {
     toast('you need to login to access this page!', {
