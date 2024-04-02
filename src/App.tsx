@@ -1,5 +1,4 @@
 import AppRoutes from './config/Routes'
-import MainNavbar from './components/navbar/MainNavbar'
 import { BrowserRouter } from 'react-router-dom'
 import LoaderBig from './components/ui/LoaderBig'
 import { useRemoveLoader } from './hooks/useLoader'
@@ -44,10 +43,7 @@ function App() {
         }}
       />
       <LoaderBig />
-      <MainNavbar />
-      <main className="bg-background dark h-screen ">
-        <AppRoutes />
-      </main>
+      <AppRoutes />
     </BrowserRouter>
   )
 }

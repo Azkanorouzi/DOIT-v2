@@ -57,10 +57,51 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         },
         invalidatesTags: ['user'],
       }),
+      updateDesc: builder.mutation({
+        queryFn: async function ({ desc }) {
+          const { error: err, data } = await supabase.auth.updateUser({
+            data: {
+              desc,
+            },
+          })
+          if (err) {
+            toast.error(
+              `We had trouble changing the description: ${err.message}`
+            )
+            throw err
+          }
+
+          toast.success('Description changed successfully')
+          return { data }
+        },
+        invalidatesTags: ['user'],
+      }),
+      updatePassword: builder.mutation({
+        queryFn: async function ({ password }) {
+          const { error, data } = await supabase.auth.updateUser({
+            password,
+          })
+
+          if (error) {
+            toast.error(
+              `We had trouble changing the password: ${error.message}`
+            )
+            throw error
+            return
+          }
+
+          toast.success('Password changed successfully.')
+          return { data }
+        },
+      }),
     }
   },
 })
 
-export const { useUploadProfileMutation, useUploadBackgroundMutation } =
-  extendedApiSlice
+export const {
+  useUploadProfileMutation,
+  useUploadBackgroundMutation,
+  useUpdateDescMutation,
+  useUpdatePasswordMutation,
+} = extendedApiSlice
 export default apiSlice.reducer

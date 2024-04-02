@@ -11,59 +11,89 @@ import ProtectedRoute from '@/components/ui/ProtectedRoute'
 import UnauthorizedPage from '@/components/ui/UnauthorizedPage'
 import InboxLayout from '@/components/layout/InboxLayout'
 import P404 from '@/components/ui/P404'
+import MainLayout from '@/components/layout/MainLayout'
 
 export default function AppRoutes() {
   const { isAuthenticated } = useIsAuthenticated()
 
   return (
     <Routes>
-      <Route
-        element={
-          <FormLayout
-            link={
-              !isAuthenticated ? (
-                <TextLink
-                  text="Create a new account, or "
-                  link="login to an existing account"
-                  to="/login"
-                />
-              ) : (
-                <TextLink
-                  text="You're logged in now,"
-                  link="Go to dashboard"
-                  to="/login"
-                />
-              )
-            }
-            type="signup"
-          />
-        }
-        path="/signup"
-      />
-      <Route
-        element={
-          <FormLayout
-            link={
-              !isAuthenticated ? (
-                <TextLink
-                  text="Login to your account, or "
-                  link="create a new account"
-                  to="/signup"
-                />
-              ) : (
-                <TextLink
-                  text="You're logged in now,"
-                  link="Go to dashboard"
-                  to="/signup"
-                />
-              )
-            }
-            type="login"
-          />
-        }
-        path="/login"
-      />
-      <Route path="/" element={<HomeLayout />} />
+      <Route element={<MainLayout />}>
+        <Route
+          element={
+            <FormLayout
+              link={
+                !isAuthenticated ? (
+                  <TextLink
+                    text="Create a new account, or "
+                    link="login to an existing account"
+                    to="/login"
+                  />
+                ) : (
+                  <TextLink
+                    text="You're logged in now,"
+                    link="Go to dashboard"
+                    to="/login"
+                  />
+                )
+              }
+              type="signup"
+            />
+          }
+          path="/signup"
+        />
+        <Route
+          element={
+            <FormLayout
+              link={
+                !isAuthenticated ? (
+                  <TextLink
+                    text="Login to your account, or "
+                    link="create a new account"
+                    to="/signup"
+                  />
+                ) : (
+                  <TextLink
+                    text="You're logged in now,"
+                    link="Go to dashboard"
+                    to="/signup"
+                  />
+                )
+              }
+              type="login"
+            />
+          }
+          path="/login"
+        />
+        <Route path="/" element={<HomeLayout />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              navigateTo="/login"
+              placeholder={
+                <UnauthorizedPage message="To access profile you must be authorized" />
+              }
+            >
+              <ProfileLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inbox"
+          element={
+            <ProtectedRoute
+              navigateTo="/login"
+              placeholder={
+                <UnauthorizedPage message="To access inbox you must be authorized" />
+              }
+            >
+              <InboxLayout />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="*" element={<P404 />} />
+      </Route>
       <Route
         path="/dashboard"
         element={
@@ -75,33 +105,6 @@ export default function AppRoutes() {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute
-            navigateTo="/login"
-            placeholder={
-              <UnauthorizedPage message="To access profile you must be authorized" />
-            }
-          >
-            <ProfileLayout />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/inbox"
-        element={
-          <ProtectedRoute
-            navigateTo="/login"
-            placeholder={
-              <UnauthorizedPage message="To access inbox you must be authorized" />
-            }
-          >
-            <InboxLayout />
-          </ProtectedRoute>
-        }
-      />
-      <Route path="*" element={<P404 />} />
     </Routes>
   )
 }

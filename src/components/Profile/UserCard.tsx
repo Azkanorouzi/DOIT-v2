@@ -1,8 +1,8 @@
-import { FaUserCircle } from 'react-icons/fa'
 import LogoutButton from '../ui/LogoutBtn'
 import { motion } from 'framer-motion'
 import ToolTipContainer from '../ui/ToolTipContainer'
 import ToolTipPopUp from '../ui/ToolTipPopUp'
+import UserAvatar from '../ui/UserAvatar'
 
 export default function UserCard({ data }) {
   console.log(data, 'this is data')
@@ -20,18 +20,7 @@ export default function UserCard({ data }) {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
         >
-          {data?.profile?.length ? (
-            <div
-              className="w-20 h-20 rounded-full"
-              style={{
-                backgroundImage: `url(${data?.profile})`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-              }}
-            ></div>
-          ) : (
-            <FaUserCircle className="w-20 h-20 rounded-full text-primary hover:text-primary-foreground transition-colors cursor-pointer" />
-          )}
+          <UserAvatar />
         </motion.div>
       </ToolTipContainer>
       <div>

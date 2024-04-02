@@ -12,11 +12,13 @@ export default function ImagePicker({
   text,
   icon,
   style,
+  delay,
 }: {
   type?: 'profile' | 'background'
   text: string
   icon: ReactNode
   style?: string
+  delay?: number
 }) {
   const [uploadProfile, { isLoading: isProfileLoading }] =
     useUploadProfileMutation()
@@ -39,7 +41,7 @@ export default function ImagePicker({
       className={`bg-card border border-primary-foreground text-primary-foreground flex gap-2 hover:text-secondary hover:bg-primary-foreground rounded-xl flex-row items-center justify-center  px-4 ${style}`}
       initial={{ scale: 0.9, opacity: 0.1 }}
       animate={{ scale: 1, opacity: 1 }}
-      transition={{ delay: 1.1 }}
+      transition={{ delay: delay ?? 1.1 }}
       role="button"
     >
       {isLoading && <LoaderSmall />}

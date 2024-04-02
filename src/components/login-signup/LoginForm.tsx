@@ -79,7 +79,7 @@ export default function LoginForm({
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (isMethodAccounts) {
       alert('hi')
-      const res = await loginWithGithub({}).unwrap()
+      await loginWithGithub({}).unwrap()
       // if (user?.role === 'authenticated') navigate('/profile')
       return
     }

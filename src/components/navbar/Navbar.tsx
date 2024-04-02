@@ -10,11 +10,11 @@ export default function Navbar({
   rightContent: ReactNode
 }) {
   return (
-    <nav className="w-screen p-8 fixed flex justify-between bg-[hsla(0,0%,3.9%,0.2)] backdrop-blur-sm z-40">
+    <nav className="w-screen p-8 fixed flex justify-between backdrop-blur-sm z-40 navbar bg-opacity-5 ">
       <section className="flex-1 justify-center hidden lg:flex">
         {leftContent}
       </section>
-      <section className=" flex-row items-center gap-3 text-primary text-4xl flex-1 justify-center flex">
+      <section className="flex-row items-center gap-3 text-primary text-4xl flex-1 justify-center flex">
         {centerContent}
       </section>
       <section className="flex-1 justify-center hidden lg:flex">

@@ -7,11 +7,13 @@ export default function NavbarButton({
   text,
   icon,
   disabled = false,
+  className,
 }: {
   to: string
   text: string
   icon: ReactNode
   disabled?: boolean
+  className?: string
 }) {
   const location = useLocation()
   const active = location.pathname === to && !disabled
@@ -21,7 +23,7 @@ export default function NavbarButton({
         variant={'ghost'}
         className={`hover:bg-transparent hover:text-primary rounded-none border-b-2 border-transparent flex gap-1 ${
           active ? 'border-primary text-primary' : ''
-        }`}
+        } ${className}`}
         disabled
       >
         {icon}
@@ -34,7 +36,7 @@ export default function NavbarButton({
         variant={'ghost'}
         className={`hover:bg-transparent hover:text-primary rounded-none border-b-2 border-transparent flex gap-1 ${
           active ? 'border-primary text-primary' : ''
-        }`}
+        } ${className}`}
       >
         {icon}
         {text}

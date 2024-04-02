@@ -19,10 +19,7 @@ export default function ProfileContent() {
           animate={{ translateX: 0, opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus
-          dolore alias beatae debitis eaque similique maiores nemo a rerum?
-          Dicta modi ullam laboriosam ratione veniam mollitia tempora nisi eum
-          error.
+          {data?.desc}
         </motion.p>
         <ProfileButtons />
       </div>
