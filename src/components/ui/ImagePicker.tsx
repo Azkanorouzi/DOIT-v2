@@ -38,7 +38,7 @@ export default function ImagePicker({
 
   return (
     <motion.label
-      className={`bg-card border border-primary-foreground text-primary-foreground flex gap-2 hover:text-secondary hover:bg-primary-foreground rounded-xl flex-row items-center justify-center  px-4 ${style}`}
+      className={` border border-white text-white flex gap-2 hover:text-primary hover:border-primary rounded-xl flex-row items-center justify-center  px-4 ${style}`}
       initial={{ scale: 0.9, opacity: 0.1 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: delay ?? 1.1 }}

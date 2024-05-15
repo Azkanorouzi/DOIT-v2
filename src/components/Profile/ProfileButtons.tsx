@@ -17,7 +17,6 @@ export default function ProfileButtons() {
         <ImagePicker
           text="Change background"
           icon={<AiFillPicture />}
-          style="  text-primary flex gap-2 hover:text-secondary text-primary"
           type="background"
           delay={1.5}
         />

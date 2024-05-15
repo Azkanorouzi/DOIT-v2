@@ -23,8 +23,7 @@ export default function LogoutButton() {
       clickHandler={handleClick}
     >
       <Button
-        variant="destructive"
-        className="relative flex gap-2"
+        className="relative flex gap-2 bg-primary"
         disabled={isLoggingOut}
       >
         <span> Logout </span>

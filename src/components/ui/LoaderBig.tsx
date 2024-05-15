@@ -1,9 +1,13 @@
 import { FaDragon } from 'react-icons/fa'
 import { motion } from 'framer-motion'
+import { useTheme } from '@/contexts/ThemeContext'
 
 export default function LoaderBig() {
+  const { theme } = useTheme()
   return (
-    <div className="w-screen h-screen fixed z-50 grid place-content-center text-[10rem] bg-black bg-opacity-70 backdrop-blur-sm text-primary loaderBig hidden">
+    <div
+      className={`w-screen h-screen fixed z-50 grid place-content-center text-[10rem] bg-black bg-opacity-70 backdrop-blur-sm text-primary loaderBig hidden ${theme}`}
+    >
       <motion.div
         initial={{ opacity: 0.5, filter: 'blur(1px)' }}
         animate={{ opacity: 1, filter: 'blur(0px)' }}

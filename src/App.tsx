@@ -6,8 +6,10 @@ import useCurrentUser from './hooks/useCurrentUser'
 import { Toaster } from 'react-hot-toast'
 import { sayHi } from './utils/sayHi'
 import { useEffect } from 'react'
+import { useTheme } from './contexts/ThemeContext'
 
 function App() {
+  const { theme } = useTheme()
   const {
     isLoading: isGettingCurrentUser,
     isAuthenticated,
@@ -39,7 +41,7 @@ function App() {
           error: {
             duration: 5000,
           },
-          className: 'bg-accent text-primary-foreground border border-primary',
+          className: `bg-accent text-white border border-primary ${theme}`,
         }}
       />
       <LoaderBig />

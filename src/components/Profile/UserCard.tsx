@@ -5,7 +5,6 @@ import ToolTipPopUp from '../ui/ToolTipPopUp'
 import UserAvatar from '../ui/UserAvatar'
 
 export default function UserCard({ data }) {
-  console.log(data, 'this is data')
   return (
     <motion.article
       className="z-10 mt-60 lg:mt-0 lg:absolute top-[290px] lg:left-[180px] flex justify-center items-center lg:gap-8 text-center  mx-auto lg:text-left p-5 rounded-xl backdrop-blur-md border shadow-sm lg:pr-20 flex-col lg:flex-row"

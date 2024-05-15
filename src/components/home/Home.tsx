@@ -4,15 +4,19 @@ import { motion } from 'framer-motion'
 import { Button } from '../ui/button'
 import { useNavigate } from 'react-router-dom'
 import useCurrentUser from '@/hooks/useCurrentUser'
+import { useTheme } from '@/contexts/ThemeContext'
 
 // Animated components using framer motion
 const MotionButton = motion(Button, { forwardMotionProps: true })
 
 export default function Home() {
+  const { theme } = useTheme()
   const { isAuthenticated } = useCurrentUser()
   const navigate = useNavigate()
   return (
-    <div className="relative  overflow-hidden w-screen h-screen flex justify-center  max-w-[1800px] max-h[3000px]">
+    <div
+      className={`relative  overflow-hidden w-screen h-screen flex justify-center  max-w-[1800px] max-h[3000px] ${theme}`}
+    >
       <div className="flex gap-16 justify-center items-center  ">
         <motion.div
           initial={{ opacity: 0, filter: 'blur(10px)' }}

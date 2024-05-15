@@ -21,7 +21,7 @@ export default function ProfileBoxes() {
           amount="0m"
           icon={<TfiTarget className="text-4xl" />}
           text="Focused"
-          style="border-primary-foreground text-primary-foreground"
+          style="border-white text-white"
           animationDelay={0.7}
         />
         {/* box */}
@@ -55,7 +55,7 @@ export default function ProfileBoxes() {
           amount="0"
           icon={<LuCrown className="text-4xl " />}
           text="Rank"
-          style="border-none text-primary-foreground bg-destructive"
+          style="border-none text-primary-foreground bg-primary"
           animationDelay={1.1}
         />
       </div>

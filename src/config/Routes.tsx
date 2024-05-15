@@ -104,7 +104,9 @@ export default function AppRoutes() {
             <DashboardLayout />{' '}
           </ProtectedRoute>
         }
-      />
+      >
+        <Route path="/dashboard/:mode" />
+      </Route>
     </Routes>
   )
 }

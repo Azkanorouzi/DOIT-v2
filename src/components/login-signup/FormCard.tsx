@@ -16,7 +16,7 @@ export default function FormCard({
 }) {
   return (
     <MotionCard
-      className="dark bg-secondary text-primary border-primary shadow-primary flex  flex-col border-t-0 card-shadow w-[450px] relative "
+      className=" bg-secondary text-primary border-primary shadow-primary flex  flex-col border-t-0 card-shadow w-[450px] relative "
       initial={{ scaleX: 0 }}
       animate={{ scaleX: 1 }}
       key={Math.random()}
