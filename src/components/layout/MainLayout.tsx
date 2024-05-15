@@ -1,17 +1,17 @@
-import { Outlet } from 'react-router-dom'
-import MainNavbar from '../navbar/MainNavbar'
-import HamburgerMenu from '../navbar/HamburgerMenu'
-import { useTheme } from '@/contexts/ThemeContext'
+import { Outlet } from "react-router-dom";
+import MainNavbar from "../navbar/MainNavbar";
+import HamburgerMenu from "../navbar/HamburgerMenu";
+import { useTheme } from "@/contexts/ThemeContext";
 
 export default function MainLayout() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   return (
     <>
       <MainNavbar />
       <HamburgerMenu />
-      <main className={`bg-background h-screen ${theme}`}>
+      <main className={`bg-background h-screen ${theme}`} id="page-wrap">
         <Outlet />
       </main>
     </>
-  )
+  );
 }

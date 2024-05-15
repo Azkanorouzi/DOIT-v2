@@ -262,7 +262,7 @@ html {
   }
 }
 * {
-  transition: 'background-color';
+  transition: "background-color";
 }
 
 * {
@@ -275,10 +275,21 @@ html {
 .dashboard {
   background-image: linear-gradient(
     to right bottom,
-    theme('colors.primary.DEFAULT'),
-    theme('colors.black'),
-    theme('colors.black'),
-    theme('colors.black'),
-    theme('colors.primary.DEFAULT')
+    theme("colors.primary.DEFAULT"),
+    theme("colors.black"),
+    theme("colors.black"),
+    theme("colors.black"),
+    theme("colors.primary.DEFAULT")
   );
+}
+
+/* Cross button for hamburger menu */
+.cross-btn {
+  font-size: 90px !important;
+  transform: scale(1.5);
+  position: relative;
+  right: 10px;
+}
+.bm-morph-shape {
+  fill: #373a47;
 }
