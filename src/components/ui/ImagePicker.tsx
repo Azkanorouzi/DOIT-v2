@@ -1,44 +1,44 @@
-import { motion } from 'framer-motion'
+import { motion } from "framer-motion";
 import {
   useUploadBackgroundMutation,
   useUploadProfileMutation,
-} from '@/redux-cake/user-slices/userSlice'
-import LoaderSmall from './LoaderSmall'
-import useCurrentUser from '@/hooks/useCurrentUser'
-import { ReactNode } from 'react'
+} from "@/redux-cake/user-slices/userSlice";
+import LoaderSmall from "./LoaderSmall";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import { ReactNode } from "react";
 
 export default function ImagePicker({
-  type = 'profile',
+  type = "profile",
   text,
   icon,
   style,
   delay,
 }: {
-  type?: 'profile' | 'background'
-  text: string
-  icon: ReactNode
-  style?: string
-  delay?: number
+  type?: "profile" | "background";
+  text: string;
+  icon: ReactNode;
+  style?: string;
+  delay?: number;
 }) {
   const [uploadProfile, { isLoading: isProfileLoading }] =
-    useUploadProfileMutation()
+    useUploadProfileMutation();
   const [uploadBackground, { isLoading: isBackgroundLoading }] =
-    useUploadBackgroundMutation()
+    useUploadBackgroundMutation();
 
-  const isLoading = type === 'profile' ? isProfileLoading : isBackgroundLoading
+  const isLoading = type === "profile" ? isProfileLoading : isBackgroundLoading;
 
-  const { id } = useCurrentUser()
+  const { id } = useCurrentUser();
 
   const handleImageHandler = (e) => {
-    const file = e.target.files[0]
-    if (!file) return
-    if (type === 'profile') uploadProfile({ id, file })
-    if (type === 'background') uploadBackground({ id, file })
-  }
+    const file = e.target.files[0];
+    if (!file) return;
+    if (type === "profile") uploadProfile({ id, file });
+    if (type === "background") uploadBackground({ id, file });
+  };
 
   return (
     <motion.label
-      className={` border border-white text-white flex gap-2 hover:text-primary hover:border-primary rounded-xl flex-row items-center justify-center  px-4 ${style}`}
+      className={` border border-white text-white flex gap-2 hover:text-primary hover:border-primary rounded-lg py-1 flex-row items-center justify-center  px-4 ${style} bg-[rgba(0,0,0,0.5)] backdrop-blur-lg`}
       initial={{ scale: 0.9, opacity: 0.1 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ delay: delay ?? 1.1 }}
@@ -55,5 +55,5 @@ export default function ImagePicker({
       {!isLoading && icon}
       <span className="text-nowrap">{text}</span>
     </motion.label>
-  )
+  );
 }

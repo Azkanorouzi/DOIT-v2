@@ -1,16 +1,16 @@
-import { FaUser } from 'react-icons/fa'
-import { MdSpaceDashboard } from 'react-icons/md'
-import { useNavigate } from 'react-router-dom'
-import ImagePicker from '../ui/ImagePicker'
-import { AiFillPicture } from 'react-icons/ai'
-import MotionButton from '../ui/MotionButton'
-import ChangeDescription from './ChangeDescription'
-import NewPasswordButton from './NewPasswordButton'
+import { FaUser } from "react-icons/fa";
+import { MdSpaceDashboard } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import ImagePicker from "../ui/ImagePicker";
+import { AiFillPicture } from "react-icons/ai";
+import MotionButton from "../ui/MotionButton";
+import ChangeDescription from "./ChangeDescription";
+import NewPasswordButton from "./NewPasswordButton";
 
 export default function ProfileButtons() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   return (
-    <div className="gap-5 flex flex-col ">
+    <div className="gap-5 flex flex-col max-w-80 lg:max-w-full mx-auto lg:mx-0">
       <div className="gap-5 flex flex-col text-center lg:text-left lg:flex-row">
         <ChangeDescription />
         <ImagePicker text="Change profile" icon={<FaUser />} />
@@ -21,22 +21,22 @@ export default function ProfileButtons() {
           delay={1.5}
         />
       </div>
-      <div className="flex gap-5 flex-col lg:flex-row lg:items-start">
+      <div className="flex gap-5 flex-col items-cente lg:flex-row lg:items-start">
         <MotionButton
-          className="bg-secondary border border-primary text-primary flex gap-2 hover:text-secondary"
+          className="max-w-60 bg-secondary border border-primary text-primary flex gap-2 hover:text-secondary"
           initial={{ scale: 0.9, opacity: 0.1 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 1.3 }}
           onClick={() => {
-            navigate('/dashboard')
+            navigate("/dashboard");
           }}
         >
-          {' '}
+          {" "}
           <MdSpaceDashboard /> Go to dashboard
         </MotionButton>
 
         <NewPasswordButton />
       </div>
     </div>
-  )
+  );
 }

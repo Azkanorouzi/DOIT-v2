@@ -1,14 +1,14 @@
-import { IoMdDoneAll } from 'react-icons/io'
-import InfoBox from '../ui/InfoBox'
-import { TfiTarget } from 'react-icons/tfi'
-import { FaGem, FaUserFriends } from 'react-icons/fa'
-import { SlOrganization } from 'react-icons/sl'
-import { LuCrown } from 'react-icons/lu'
+import { IoMdDoneAll } from "react-icons/io";
+import InfoBox from "../ui/InfoBox";
+import { TfiTarget } from "react-icons/tfi";
+import { FaGem, FaUserFriends } from "react-icons/fa";
+import { SlOrganization } from "react-icons/sl";
+import { LuCrown } from "react-icons/lu";
 
 export default function ProfileBoxes() {
   return (
-    <div className=" mt-10 lg:mt-36 lg:ml-36   flex gap-5 flex-row lg:flex-col pb-10">
-      <div className="z-10 flex gap-5 flex-col lg:flex-row">
+    <div className=" mt-10  xl:mt-36 lg:ml-36   flex gap-5 flex-row lg:flex-col pb-10">
+      <div className="z-10 flex gap-5 flex-col lg:flex-row md:pl-12 xl:pl-0">
         {/* box */}
         <InfoBox
           amount="0"
@@ -33,7 +33,7 @@ export default function ProfileBoxes() {
           animationDelay={0.5}
         />
       </div>
-      <div className="flex gap-5 z-10 flex-col lg:flex-row">
+      <div className="flex gap-5 z-10 flex-col lg:flex-row md:pl-20 xl:pl-0">
         {/* box */}
         <InfoBox
           amount="0"
@@ -60,5 +60,5 @@ export default function ProfileBoxes() {
         />
       </div>
     </div>
-  )
+  );
 }

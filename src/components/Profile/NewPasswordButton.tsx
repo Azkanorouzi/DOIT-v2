@@ -1,9 +1,9 @@
-import { FaKey } from 'react-icons/fa'
-import MotionButton from '../ui/MotionButton'
-import DialogComplete from '../ui/DialogComplete'
-import { z } from 'zod'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { FaKey } from "react-icons/fa";
+import MotionButton from "../ui/MotionButton";
+import DialogComplete from "../ui/DialogComplete";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -11,49 +11,49 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '../ui/form'
-import { Input } from '../ui/input'
-import FormError from '../login-signup/FormError'
-import { useUpdatePasswordMutation } from '@/redux-cake/user-slices/userSlice'
-import toast from 'react-hot-toast'
+} from "../ui/form";
+import { Input } from "../ui/input";
+import FormError from "../login-signup/FormError";
+import { useUpdatePasswordMutation } from "@/redux-cake/user-slices/userSlice";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   password: z
     .string()
-    .min(8, 'At least 8 characters')
-    .max(256, 'Max 256 characters')
+    .min(8, "At least 8 characters")
+    .max(256, "Max 256 characters")
     .refine(
       (password) => {
-        const containsLetter = /[a-zA-Z]/.test(password)
-        const containsNumber = /\d/.test(password)
-        return containsLetter && containsNumber
+        const containsLetter = /[a-zA-Z]/.test(password);
+        const containsNumber = /\d/.test(password);
+        return containsLetter && containsNumber;
       },
       {
-        message: 'include numbers and letters',
-      }
+        message: "include numbers and letters",
+      },
     ),
   passwordRepeat: z
     .string()
-    .min(8, 'at least 8 characters')
-    .max(256, 'max 256 characters'),
-})
+    .min(8, "at least 8 characters")
+    .max(256, "max 256 characters"),
+});
 
 export default function NewPasswordButton() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      password: '',
-      passwordRepeat: '',
+      password: "",
+      passwordRepeat: "",
     },
-  })
-  const [updatePassword, { isLoading }] = useUpdatePasswordMutation()
+  });
+  const [updatePassword, { isLoading }] = useUpdatePasswordMutation();
 
   async function clickHandler(values: z.infer<typeof formSchema>) {
     if (values.password !== values.passwordRepeat) {
-      toast.error('Password did not match')
-      return
+      toast.error("Password did not match");
+      return;
     }
-    await updatePassword({ password: values.password })
+    await updatePassword({ password: values.password });
   }
 
   const formEl = (
@@ -99,7 +99,7 @@ export default function NewPasswordButton() {
         />
       </form>
     </Form>
-  )
+  );
 
   return (
     <DialogComplete
@@ -111,15 +111,15 @@ export default function NewPasswordButton() {
       onOpenChanged={() => form.reset()}
     >
       <MotionButton
-        className="bg-secondary border border-primary text-primary flex gap-2 hover:text-secondary"
+        className="bg-secondary w-full lg:w-fit max-w-60 border border-primary text-primary flex gap-2 hover:text-secondary"
         initial={{ scale: 0.9, opacity: 0.1 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 1.5 }}
         disabled={isLoading}
       >
-        {' '}
+        {" "}
         <FaKey /> Change password
       </MotionButton>
     </DialogComplete>
-  )
+  );
 }
