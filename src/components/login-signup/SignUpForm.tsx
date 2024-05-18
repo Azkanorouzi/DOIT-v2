@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 import {
   Form,
   FormControl,
@@ -10,97 +10,97 @@ import {
   FormField,
   FormItem,
   FormLabel,
-} from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { Separator } from '../ui/separator'
-import { Button } from '../ui/button'
-import FormError from './FormError'
-import { useState } from 'react'
-import AccountsLogin from './AccountsLogin'
-import { useSignUpWithEmailMutation } from '@/redux-cake/auth-slices/authSlice'
-import LoaderMin from '../ui/LoaderMin'
-import { useNavigate } from 'react-router-dom'
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
+import FormError from "./FormError";
+import { useState } from "react";
+import AccountsLogin from "./AccountsLogin";
+import { useSignUpWithEmailMutation } from "@/redux-cake/auth-slices/authSlice";
+import LoaderMin from "../ui/LoaderMin";
+import { useNavigate } from "react-router-dom";
 
 const formSchema = z.object({
   username: z
     .string()
-    .min(3, 'at least 3 characters')
-    .max(128, 'max 128 characters')
+    .min(3, "at least 3 characters")
+    .max(128, "max 128 characters")
     .refine((value) => /^[a-zA-Z0-9_-]+$/.test(value) && !/\s/.test(value), {
-      message: 'only contain letters, numbers, underscores, and hyphens',
+      message: "only contain letters, numbers, underscores, and hyphens",
     }),
   password: z
     .string()
-    .min(8, 'at least 8 characters')
-    .max(256, 'max 256 characters')
+    .min(8, "at least 8 characters")
+    .max(256, "max 256 characters")
     .refine(
       (password) => {
-        const containsLetter = /[a-zA-Z]/.test(password)
-        const containsNumber = /\d/.test(password)
-        return containsLetter && containsNumber
+        const containsLetter = /[a-zA-Z]/.test(password);
+        const containsNumber = /\d/.test(password);
+        return containsLetter && containsNumber;
       },
       {
-        message: 'include numbers and letters',
-      }
+        message: "include numbers and letters",
+      },
     ),
   passwordRepeat: z
     .string()
-    .min(8, 'at least 8 characters')
-    .max(256, 'max 256 characters'),
+    .min(8, "at least 8 characters")
+    .max(256, "max 256 characters"),
   email: z
     .string()
-    .min(8, 'at least 8 characters')
-    .max(256, 'max 256 characters')
+    .min(8, "at least 8 characters")
+    .max(256, "max 256 characters")
     .refine((value) => /^\S+@\S+\.\S+$/.test(value), {
-      message: 'Invalid email address format',
+      message: "Invalid email address format",
     }),
-})
+});
 export default function SignUpForm({
   isMethodAccounts,
 }: {
-  isMethodAccounts: boolean
+  isMethodAccounts: boolean;
 }) {
-  const navigate = useNavigate()
-  const [notMatched, setNotMatched] = useState('')
+  const navigate = useNavigate();
+  const [notMatched, setNotMatched] = useState("");
   // To sign up the user
   const [signUpWithEmail, { isLoading: isAuthLoading }] =
-    useSignUpWithEmailMutation()
+    useSignUpWithEmailMutation();
 
-  const [selectedAccount, setSelectedAccount] = useState('google')
+  const [selectedAccount, setSelectedAccount] = useState("google");
 
   function handleSelectedAccount(selected: string) {
-    setSelectedAccount(selected)
+    setSelectedAccount(selected);
   }
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: '',
-      password: '',
-      passwordRepeat: '',
-      email: '',
+      username: "",
+      password: "",
+      passwordRepeat: "",
+      email: "",
     },
-  })
+  });
   const buttonDisabled =
     (Object.keys(form.formState.errors).length == 0 &&
       Object.values(form.getValues()).every((val) => val.length)) ||
-    isMethodAccounts
+    isMethodAccounts;
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.password !== values.passwordRepeat) {
-      setNotMatched('Password did not match')
-      return
+      setNotMatched("Password did not match");
+      return;
     }
-    const { password, email, username } = values
+    const { password, email, username } = values;
     // dispatch(signUp({ password, email, username }))
     const { user } = await signUpWithEmail({
       password,
       email,
       username,
-    }).unwrap()
-    if (user?.role === 'authenticated') navigate('/dashboard')
+    }).unwrap();
+    if (user?.role === "authenticated") navigate("/dashboard");
   }
 
   return (
@@ -118,7 +118,7 @@ export default function SignUpForm({
           />
         ) : (
           <>
-            {' '}
+            {" "}
             <div>
               <FormField
                 control={form.control}
@@ -136,7 +136,7 @@ export default function SignUpForm({
                         <FormDescription>Your public username</FormDescription>
                       )}
                     </FormItem>
-                  )
+                  );
                 }}
               />
             </div>
@@ -232,28 +232,28 @@ export default function SignUpForm({
         <div className="flex justify-center gap-2 pt-4">
           {!isMethodAccounts && (
             <Button
-              variant={'outline'}
+              variant={"outline"}
               className="text-primary"
               type="reset"
               onClick={function () {
-                form.reset()
+                form.reset();
               }}
             >
-              {' '}
-              Cancel{' '}
+              {" "}
+              Cancel{" "}
             </Button>
           )}
 
           <Button
-            variant={'destructive'}
+            variant={"default"}
             className="bg-primary"
             disabled={!buttonDisabled || isAuthLoading}
           >
-            {' '}
-            Submit{' '}
+            {" "}
+            Submit{" "}
           </Button>
         </div>
       </form>
     </Form>
-  )
+  );
 }

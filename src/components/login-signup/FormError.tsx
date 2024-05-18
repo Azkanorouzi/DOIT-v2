@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react'
-import { FormMessage } from '../ui/form'
-import { BsShieldFillExclamation } from 'react-icons/bs'
-import { motion } from 'framer-motion'
+import { ReactNode } from "react";
+import { FormMessage } from "../ui/form";
+import { BsShieldFillExclamation } from "react-icons/bs";
+import { motion } from "framer-motion";
 
 export default function FormError({
   customErr,
 }: {
-  customErr?: string | ReactNode
+  customErr?: string | ReactNode;
 }) {
   return (
     <motion.div
@@ -21,5 +21,5 @@ export default function FormError({
         <FormMessage />
       )}
     </motion.div>
-  )
+  );
 }

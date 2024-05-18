@@ -7,7 +7,7 @@ import UserAvatar from "../ui/UserAvatar";
 export default function UserCard({ data }) {
   return (
     <motion.article
-      className="z-10  mt-60 lg:mt-0 lg:absolute top-[290px] lg:left-[180px] flex justify-center items-center lg:gap-8 text-center  mx-auto lg:text-left p-5 rounded-xl backdrop-blur-md border shadow-sm lg:pr-20 flex-col lg:flex-row"
+      className="z-20  mt-60 lg:mt-0 lg:absolute top-[290px] lg:left-[180px] flex justify-center items-center lg:gap-8 text-center  mx-auto lg:text-left p-5 rounded-xl backdrop-blur-md border shadow-sm lg:pr-20 flex-col lg:flex-row"
       whileHover={{ scale: 1.01, transition: { duration: 0.2 } }}
       initial={{ opacity: 0.2, translateX: -100 }}
       animate={{ opacity: 1, translateX: 0 }}
@@ -49,7 +49,7 @@ export default function UserCard({ data }) {
         </motion.p>
       </div>
 
-      <div className="self-bottom pt-7">
+      <div className="self-bottom z-40 pt-7">
         <LogoutButton />
       </div>
     </motion.article>
