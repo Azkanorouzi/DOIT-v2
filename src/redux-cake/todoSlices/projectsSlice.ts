@@ -33,3 +33,6 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
     };
   },
 });
+
+export const { useCreateDefaultsMutation: useCreateDefaultProjects } =
+  extendedApiSlice;
