@@ -20,6 +20,9 @@ import AccountsLogin from "./AccountsLogin";
 import { useSignUpWithEmailMutation } from "@/redux-cake/auth-slices/authSlice";
 import LoaderMin from "../ui/LoaderMin";
 import { useNavigate } from "react-router-dom";
+import { useGenerateDefaults } from "@/hooks/useGenerateDefaults";
+import toast from "react-hot-toast";
+import { getDefaultGenerateSuccessMessage } from "@/utils/messages";
 
 const formSchema = z.object({
   username: z
@@ -67,6 +70,10 @@ export default function SignUpForm({
     useSignUpWithEmailMutation();
 
   const [selectedAccount, setSelectedAccount] = useState("google");
+  // Generates defaults
+  const { isCreatingDefaults, startGeneratingDefaults } = useGenerateDefaults();
+
+  const isLoading = isCreatingDefaults || isAuthLoading;
 
   function handleSelectedAccount(selected: string) {
     setSelectedAccount(selected);
@@ -100,12 +107,35 @@ export default function SignUpForm({
       email,
       username,
     }).unwrap();
-    if (user?.role === "authenticated") navigate("/dashboard");
+
+    if (user?.role === "authenticated" && !isLoading) navigate("/dashboard");
+    else return;
+
+    const {
+      numTodosCreated,
+      numProjectsCreated,
+      numTagsCreated,
+      numGoalsCreated,
+      numEnvironmentsCreated,
+    } = await startGeneratingDefaults({ id: user.id });
+
+    const defaultSuccessMessage = getDefaultGenerateSuccessMessage({
+      numTodosCreated,
+      numProjectsCreated,
+      numTagsCreated,
+      numGoalsCreated,
+      numEnvironmentsCreated,
+    });
+
+    toast.success(
+      defaultSuccessMessage.message,
+      defaultSuccessMessage?.icon ? { icon: defaultSuccessMessage.icon } : {},
+    );
   }
 
   return (
     <Form {...form}>
-      {isAuthLoading && <LoaderMin />}
+      {isLoading && <LoaderMin />}
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex w-full flex-col gap-1"

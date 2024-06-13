@@ -1,6 +1,11 @@
 import toast from "react-hot-toast";
 import { apiSlice } from "../apiSlice";
 import supabase from "@/config/supabase";
+import {
+  loginSuccessfulMessage,
+  logoutSuccess,
+  signUpSuccessfulMessage,
+} from "@/utils/messages";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => {
@@ -29,7 +34,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             throw { error };
           }
           // Hot toast
-          toast.success("Sign up was successful");
+          toast.success(
+            signUpSuccessfulMessage.message,
+            signUpSuccessfulMessage?.icon
+              ? { icon: signUpSuccessfulMessage.icon }
+              : {},
+          );
           return { data };
         },
         invalidatesTags: ["user"],
@@ -59,7 +69,10 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             throw new Error(error?.message);
           }
           // hot toast
-          toast.success(`You're now logged out`);
+          toast.success(
+            logoutSuccess.message,
+            logoutSuccess?.icon ? { icon: logoutSuccess.icon } : {},
+          );
           return { data: {} };
         },
         invalidatesTags: ["user"],
@@ -78,7 +91,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             throw new Error(error?.message);
           }
 
-          toast.success("Login success");
+          toast.success(
+            loginSuccessfulMessage.message,
+            loginSuccessfulMessage?.icon
+              ? { icon: loginSuccessfulMessage.icon }
+              : {},
+          );
           return { data, isSuccess: true };
         },
         invalidatesTags: ["user"],
@@ -96,7 +114,12 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             );
             throw new Error(error.message);
           }
-          toast.success("Login success");
+          toast.success(
+            loginSuccessfulMessage.message,
+            loginSuccessfulMessage?.message
+              ? { icon: loginSuccessfulMessage.icon }
+              : {},
+          );
           return { data };
         },
       }),

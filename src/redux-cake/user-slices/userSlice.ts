@@ -1,61 +1,76 @@
-import supabase from '@/config/supabase'
-import { apiSlice } from '../apiSlice'
-import toast from 'react-hot-toast'
+import supabase from "@/config/supabase";
+import { apiSlice } from "../apiSlice";
+import toast from "react-hot-toast";
+import {
+  descriptionChangeSuccess,
+  passwordChangeSuccess,
+  profileUploadSuccess,
+} from "@/utils/messages";
 
 export const extendedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => {
     return {
       uploadBackground: builder.mutation({
         queryFn: async ({ id, file }) => {
-          const randomNum = Math.random()
+          const randomNum = Math.random();
           //   Uploading profile
           const { data, error } = await supabase.storage
-            .from('background')
-            .upload(`background-${id}-${randomNum}`, file)
+            .from("background")
+            .upload(`background-${id}-${randomNum}`, file);
 
           const { error: error2 } = await supabase.auth.updateUser({
             data: {
               background: `https://bajredxtbeceozencuse.supabase.co/storage/v1/object/public/background/background-${id}-${randomNum}`,
             },
-          })
+          });
 
-          const err = error && error2
+          const err = error && error2;
 
           if (err) {
-            toast.error(`We had trouble uploading the picture: ${err.message}`)
-            throw err
+            toast.error(`We had trouble uploading the picture: ${err.message}`);
+            throw err;
           }
 
-          toast.success('File uploaded successfully')
-          return { data }
+          toast.success(
+            profileUploadSuccess.message,
+            profileUploadSuccess.icon
+              ? { icon: profileUploadSuccess.icon }
+              : {},
+          );
+          return { data };
         },
-        invalidatesTags: ['user'],
+        invalidatesTags: ["user"],
       }),
       uploadProfile: builder.mutation({
         queryFn: async ({ id, file }) => {
-          const randomNum = Math.random()
+          const randomNum = Math.random();
           //   Uploading profile
           const { data, error } = await supabase.storage
-            .from('profile')
-            .upload(`profile-${id}-${randomNum}`, file)
+            .from("profile")
+            .upload(`profile-${id}-${randomNum}`, file);
 
           const { error: error2 } = await supabase.auth.updateUser({
             data: {
               profile: `https://bajredxtbeceozencuse.supabase.co/storage/v1/object/public/profile/profile-${id}-${randomNum}`,
             },
-          })
+          });
 
-          const err = error && error2
+          const err = error && error2;
 
           if (err) {
-            toast.error(`We had trouble uploading the picture: ${err.message}`)
-            throw err
+            toast.error(`We had trouble uploading the picture: ${err.message}`);
+            throw err;
           }
 
-          toast.success('File uploaded successfully')
-          return { data }
+          toast.success(
+            profileUploadSuccess.message,
+            profileUploadSuccess?.icon
+              ? { icon: profileUploadSuccess.icon }
+              : {},
+          );
+          return { data };
         },
-        invalidatesTags: ['user'],
+        invalidatesTags: ["user"],
       }),
       updateDesc: builder.mutation({
         queryFn: async function ({ desc }) {
@@ -63,45 +78,55 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
             data: {
               desc,
             },
-          })
+          });
           if (err) {
             toast.error(
-              `We had trouble changing the description: ${err.message}`
-            )
-            throw err
+              `We had trouble changing the description: ${err.message}`,
+            );
+            throw err;
           }
 
-          toast.success('Description changed successfully')
-          return { data }
+          toast.success(
+            descriptionChangeSuccess.message,
+            descriptionChangeSuccess?.icon
+              ? { icon: descriptionChangeSuccess.icon }
+              : {},
+          );
+          return { data };
         },
-        invalidatesTags: ['user'],
+        invalidatesTags: ["user"],
       }),
       updatePassword: builder.mutation({
         queryFn: async function ({ password }) {
           const { error, data } = await supabase.auth.updateUser({
             password,
-          })
+          });
 
           if (error) {
             toast.error(
-              `We had trouble changing the password: ${error.message}`
-            )
-            throw error
-            return
+              `We had trouble changing the password: ${error.message}`,
+            );
+            throw error;
+            return;
           }
 
-          toast.success('Password changed successfully.')
-          return { data }
+          toast.success(
+            passwordChangeSuccess.message,
+            passwordChangeSuccess?.icon
+              ? { icon: passwordChangeSuccess.icon }
+              : {},
+          );
+          return { data };
         },
       }),
-    }
+    };
   },
-})
+});
 
 export const {
   useUploadProfileMutation,
   useUploadBackgroundMutation,
   useUpdateDescMutation,
   useUpdatePasswordMutation,
-} = extendedApiSlice
-export default apiSlice.reducer
+} = extendedApiSlice;
+export default apiSlice.reducer;

@@ -16,6 +16,7 @@ import { Input } from "../ui/input";
 import FormError from "../login-signup/FormError";
 import { useUpdatePasswordMutation } from "@/redux-cake/user-slices/userSlice";
 import toast from "react-hot-toast";
+import { passwordNotMatchMessage } from "@/utils/messages";
 
 const formSchema = z.object({
   password: z
@@ -50,7 +51,7 @@ export default function NewPasswordButton() {
 
   async function clickHandler(values: z.infer<typeof formSchema>) {
     if (values.password !== values.passwordRepeat) {
-      toast.error("Password did not match");
+      toast.error(passwordNotMatchMessage.message);
       return;
     }
     await updatePassword({ password: values.password });

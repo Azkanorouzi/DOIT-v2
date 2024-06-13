@@ -1,12 +1,20 @@
-import { fakeBaseQuery, createApi } from '@reduxjs/toolkit/query/react'
+import { fakeBaseQuery, createApi } from "@reduxjs/toolkit/query/react";
 
 const apiSlice = createApi({
-  reducerPath: 'apiSlice',
+  reducerPath: "apiSlice",
   baseQuery: fakeBaseQuery(),
-  tagTypes: ['user'],
+  tagTypes: [
+    "user",
+    "environments",
+    "projects",
+    "todos",
+    "tags",
+    "goals",
+    "subtodos",
+  ],
   endpoints: () => {
-    return {}
+    return {};
   },
-})
+});
 
-export { apiSlice }
+export { apiSlice };
