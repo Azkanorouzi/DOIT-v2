@@ -293,3 +293,31 @@ html {
 .bm-morph-shape {
   fill: #373a47;
 }
+.border-indigo {
+  border-color: violet;
+  color: violet;
+}
+.border-red {
+  border-color: red;
+  color: red;
+}
+.border-lime {
+  border-color: lime;
+  color: lime;
+}
+.border-cyan {
+  border-color: cyan;
+  color: cyan;
+}
+.border-yellow {
+  border-color: gold;
+  color: gold;
+}
+.border-blue {
+  border-color: skyblue;
+  color: skyblue;
+}
+.border-yellow-light {
+  border-color: yellow;
+  color: yellow;
+}

@@ -3,9 +3,18 @@ import { IoIosColorPalette } from "react-icons/io";
 import { IconType } from "react-icons/lib";
 import { IoMdDoneAll } from "react-icons/io";
 import { LuHome } from "react-icons/lu";
-import { FaLeaf } from "react-icons/fa";
+import {
+  FaBox,
+  FaExclamation,
+  FaLeaf,
+  FaRegCalendarCheck,
+  FaStar,
+  FaSun,
+} from "react-icons/fa";
 import { FaRunning } from "react-icons/fa";
 import { IoBookSharp } from "react-icons/io5";
+import { RiInboxArchiveFill } from "react-icons/ri";
+import { MdNotificationImportant } from "react-icons/md";
 
 // Interfaces
 interface IconEntry {
@@ -24,16 +33,31 @@ const iconMap: IconMap = {
   FaLeaf: { component: FaLeaf, name: "health" },
   FaRunning: { component: FaRunning, name: "exercise" },
   IoBookSharp: { component: IoBookSharp, name: "book" },
+  starred: { component: FaStar, name: "star" },
+  inbox: { component: RiInboxArchiveFill, name: "inbox" },
+  upcoming: { component: FaRegCalendarCheck, name: "calendar" },
+  someday: { component: FaBox, name: "anytime" },
+  important: { component: FaExclamation, name: "Important" },
+  passed: { component: MdNotificationImportant, name: "passed" },
+  today: { component: FaSun, name: "today" },
 };
 
 // This function will take in a icon component name like COMPONENT:CgProfile and it render it
-export const IconRenderer = ({ iconName }: { iconName: string }) => {
-  const extractedName = iconName.slice(iconName.indexOf(":"));
-  const IconComponent = iconMap[extractedName].component;
+export const IconRenderer = ({
+  iconName,
+  className,
+}: {
+  iconName: string;
+  className?: string;
+}) => {
+  const extractedName = iconName.includes(":")
+    ? iconName.slice(iconName.indexOf(":"))
+    : iconName;
+  const IconComponent = iconMap[extractedName]?.component;
 
   if (!IconComponent) {
     return null; // or render a default icon or error message
   }
 
-  return <IconComponent />;
+  return <IconComponent className={className} />;
 };

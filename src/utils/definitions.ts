@@ -89,3 +89,13 @@ export interface ToastMessage {
   message: string;
   icon?: string;
 }
+
+export type specialEnvironments =
+  | "normal"
+  | "starred"
+  | "today"
+  | "upcoming"
+  | "someday"
+  | "inbox"
+  | "passed"
+  | "important";
