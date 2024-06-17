@@ -2,6 +2,7 @@ import { ReactNode, createContext, useState } from "react";
 import { Environment } from "./Environment";
 import TaskNumber from "./TaskNumber";
 import EditButtons from "./EditButtons";
+import EditMenuButton from "./EditMenuButton";
 
 export const TaskContext = createContext(null);
 
@@ -11,7 +12,7 @@ interface TasksProps {
 }
 
 export default function Tasks({ children, type }: TasksProps) {
-  const [editOpen, setEditOpen] = useState<boolean>(false);
+  const [editOpen, setEditOpen] = useState<string>("");
   const [selected, setSelected] = useState<string>("today");
   return (
     <TaskContext.Provider
@@ -26,3 +27,4 @@ export default function Tasks({ children, type }: TasksProps) {
 Tasks.Environment = Environment;
 Tasks.TaskNumber = TaskNumber;
 Tasks.EditButtons = EditButtons;
+Tasks.EditMenuButton = EditMenuButton;

@@ -12,6 +12,7 @@ import { useParams } from "react-router-dom";
 export default function DashboardSideBar() {
   const { mode } = useParams();
   const [hovered, setHovered] = useState(false);
+  // TODO: useCurrentOrganization must be implemented imported here and whenever changes we should change the url
 
   return (
     <motion.aside
@@ -27,42 +28,42 @@ export default function DashboardSideBar() {
         <div className="flex flex-col gap-5">
           <DashboardNavLink
             icon={<MdDoneAll />}
-            linkTo="/dashboard/todo"
+            linkTo="/dashboard/personal/todo"
             hovered={hovered}
             text="Todos"
             active={mode === "todo"}
           />
           <DashboardNavLink
             icon={<FaChartSimple />}
-            linkTo="/dashboard/charts"
+            linkTo="/dashboard/personal/charts"
             hovered={hovered}
             text="Charts"
             active={mode === "charts"}
           />
           <DashboardNavLink
             icon={<SlCalender />}
-            linkTo="/dashboard/calender"
+            linkTo="/dashboard/personal/calendar"
             hovered={hovered}
             text="Calendar"
             active={mode === "calender"}
           />
           <DashboardNavLink
             icon={<GoGoal />}
-            linkTo="/dashboard/goals"
+            linkTo="/dashboard/personal/goals"
             hovered={hovered}
             text="Goals"
             active={mode === "goals"}
           />
           <DashboardNavLink
             icon={<IoIosTimer />}
-            linkTo="/dashboard/pomodoro"
+            linkTo="/dashboard/personal/pomodoro"
             hovered={hovered}
             text="Pomodoro"
             active={mode === "pomodoro"}
           />
           <DashboardNavLink
             icon={<FaDollarSign />}
-            linkTo="/dashboard/expenses"
+            linkTo="/dashboard/personal/expenses"
             hovered={hovered}
             text="Finance"
             active={mode === "finance"}
@@ -72,7 +73,7 @@ export default function DashboardSideBar() {
         <div className="flex gap-5 flex-col  border-primary">
           <DashboardNavLink
             icon={<FaMedal />}
-            linkTo="/dashboard/medal"
+            linkTo="/dashboard/personal/medal"
             hovered={hovered}
             text="Medal"
             active={mode === "medal"}
@@ -80,7 +81,7 @@ export default function DashboardSideBar() {
           <DashboardNavLink
             icon={<FaPeopleGroup />}
             text="Friends"
-            linkTo="/dashboard/friends"
+            linkTo="/dashboard/personal/friends"
             hovered={hovered}
             active={mode === "freinds"}
           />
