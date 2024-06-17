@@ -1,20 +1,20 @@
 // Our app routes, are managed here
-import { Routes, Route } from 'react-router-dom'
-import FormLayout from '@/components/layout/FormLayout'
-import TextLink from '@/components/ui/TextLink'
-import DashboardLayout from '@/components/layout/DashboardLayout'
-import useIsAuthenticated from '@/hooks/useCurrentUser'
-import HomeLayout from '@/components/layout/HomeLayout'
-import ProfileLayout from '@/components/layout/ProfileLayout'
-import ProtectedRoute from '@/components/ui/ProtectedRoute'
+import { Routes, Route, Navigate } from "react-router-dom";
+import FormLayout from "@/components/layout/FormLayout";
+import TextLink from "@/components/ui/TextLink";
+import DashboardLayout from "@/components/layout/DashboardLayout";
+import useIsAuthenticated from "@/hooks/useCurrentUser";
+import HomeLayout from "@/components/layout/HomeLayout";
+import ProfileLayout from "@/components/layout/ProfileLayout";
+import ProtectedRoute from "@/components/ui/ProtectedRoute";
 
-import UnauthorizedPage from '@/components/ui/UnauthorizedPage'
-import InboxLayout from '@/components/layout/InboxLayout'
-import P404 from '@/components/ui/P404'
-import MainLayout from '@/components/layout/MainLayout'
+import UnauthorizedPage from "@/components/ui/UnauthorizedPage";
+import InboxLayout from "@/components/layout/InboxLayout";
+import P404 from "@/components/ui/P404";
+import MainLayout from "@/components/layout/MainLayout";
 
 export default function AppRoutes() {
-  const { isAuthenticated } = useIsAuthenticated()
+  const { isAuthenticated } = useIsAuthenticated();
 
   return (
     <Routes>
@@ -101,12 +101,42 @@ export default function AppRoutes() {
             navigateTo="/login"
             placeholder={<UnauthorizedPage />}
           >
-            <DashboardLayout />{' '}
+            <DashboardLayout />{" "}
           </ProtectedRoute>
         }
       >
-        <Route path="/dashboard/:mode" />
+        <Route path="/dashboard/:organization/:mode/:container?" />
       </Route>
+
+      {/* ====== Aliases ====== */}
+      <Route
+        path="/dashboard/todo"
+        element={<Navigate to={"/dashboard/personal/todo"} />}
+      />
+
+      <Route
+        path="/dashboard/charts"
+        element={<Navigate to={"/dashboard/personal/charts"} />}
+      />
+      <Route
+        path="/dashboard/calendar"
+        element={<Navigate to={"/dashboard/personal/calendar"} />}
+      />
+
+      <Route
+        path="/dashboard/goals"
+        element={<Navigate to={"/dashboard/personal/goals"} />}
+      />
+
+      <Route
+        path="/dashboard/pomodoro"
+        element={<Navigate to={"/dashboard/personal/pomodoro"} />}
+      />
+
+      <Route
+        path="/dashboard/finance"
+        element={<Navigate to={"/dashboard/personal/finance"} />}
+      />
     </Routes>
-  )
+  );
 }
