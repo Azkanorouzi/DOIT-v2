@@ -1,11 +1,15 @@
 import { useCreateDefaultEnvironments } from "@/redux-cake/taskSlice/environmentsSlice";
 import { useCreateDefaultGoals } from "@/redux-cake/taskSlice/goalsSlice";
+import { useCreateDefaultOrganizations } from "@/redux-cake/taskSlice/organizationsSlice";
 import { useCreateDefaultProjects } from "@/redux-cake/taskSlice/projectsSlice";
 import { useCreateDefaultTags } from "@/redux-cake/taskSlice/tagsSlice";
 import { useCreateDefaultTodos } from "@/redux-cake/taskSlice/todosSlice";
 import { getIds } from "@/utils/getIds";
 
 export function useGenerateDefaults() {
+  // Default organizations
+  const [createDefaultOrganization, { isLoading: isCreatingOrganiztions }] =
+    useCreateDefaultOrganizations();
   // Default todos
   const [createDefaultTodos, { isLoading: isCreatingDefaultTodos }] =
     useCreateDefaultTodos();
@@ -25,6 +29,7 @@ export function useGenerateDefaults() {
     useCreateDefaultTags();
 
   const isCreatingDefaults = [
+    isCreatingOrganiztions,
     isCreatingDefaultTags,
     isCreatingDefaultGoals,
     isCreatingDefaultTodos,
@@ -33,6 +38,11 @@ export function useGenerateDefaults() {
   ].every(Boolean);
 
   async function startGeneratingDefaults({ id }: { id: string }) {
+    // =========== Creating default organiztions
+    const organiztionData = await createDefaultOrganization({
+      userId: id,
+    }).unwrap();
+
     // =========== Creating default todos
 
     const data = await createDefaultTodos({
@@ -75,6 +85,7 @@ export function useGenerateDefaults() {
       numEnvironmentsCreated: environmentsData.length,
       numTagsCreated: tagsData.length,
       numGoalsCreated: goalsData.length,
+      numOrganizationsCreated: organiztionData.length,
     };
   }
 

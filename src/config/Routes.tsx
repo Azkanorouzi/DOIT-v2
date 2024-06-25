@@ -12,6 +12,8 @@ import UnauthorizedPage from "@/components/ui/UnauthorizedPage";
 import InboxLayout from "@/components/layout/InboxLayout";
 import P404 from "@/components/ui/P404";
 import MainLayout from "@/components/layout/MainLayout";
+import ContainerContextProvider from "@/contexts/ContainerContext";
+import OrganizationContextProvider from "@/contexts/OrganizationContext";
 
 export default function AppRoutes() {
   const { isAuthenticated } = useIsAuthenticated();
@@ -101,7 +103,11 @@ export default function AppRoutes() {
             navigateTo="/login"
             placeholder={<UnauthorizedPage />}
           >
-            <DashboardLayout />{" "}
+            <OrganizationContextProvider>
+              <ContainerContextProvider>
+                <DashboardLayout />{" "}
+              </ContainerContextProvider>
+            </OrganizationContextProvider>
           </ProtectedRoute>
         }
       >
@@ -109,6 +115,14 @@ export default function AppRoutes() {
       </Route>
 
       {/* ====== Aliases ====== */}
+      <Route
+        path="/dashboard"
+        element={<Navigate to={`/dashboard/personal/todo/today`} />}
+      />
+      <Route
+        path="/dashboard/personal/todo/"
+        element={<Navigate to={`/dashboard/personal/todo/today`} />}
+      />
       <Route
         path="/dashboard/todo"
         element={<Navigate to={"/dashboard/personal/todo"} />}

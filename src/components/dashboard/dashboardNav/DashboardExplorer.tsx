@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import Environments from "../tasks/Environments";
+import Environments from "../tasks/Environments/Environments";
 import { motion } from "framer-motion";
 
 export default function DashboardExplorer() {

@@ -32,11 +32,27 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
         },
         invalidatesTags: ["environments"],
       }),
+      getUserEnvironments: builder.query({
+        queryFn: async ({ userId }: { userId: string }) => {
+          const { data: environments, error } = await supabase
+            .from("environments")
+            .select("*")
+            .eq("user_id", userId);
+
+          if (error) {
+            toast.error(`We had trouble fetching your environments ${error}`);
+            console.error(error.message);
+            throw error;
+          }
+          return { data: environments };
+        },
+      }),
     };
   },
 });
 
 export const {
   useCreateDefaultEnvironmentsMutation: useCreateDefaultEnvironments,
+  useGetUserEnvironmentsQuery: useGetUserEnvironments,
 } = extendedApiSlice;
 export default apiSlice.reducer;

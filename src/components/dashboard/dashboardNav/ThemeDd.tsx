@@ -1,21 +1,22 @@
-import DropDownComplete from '@/components/ui/DropDownComplete'
+import DropDownComplete from "@/components/ui/DropDownComplete";
 import {
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
-} from '@/components/ui/dropdown-menu'
-import { useTheme } from '@/contexts/ThemeContext'
-import { useEffect } from 'react'
-import { FaPaintBrush } from 'react-icons/fa'
+} from "@/components/ui/dropdown-menu";
+import { useTheme } from "@/contexts/ThemeContext";
+import { useEffect } from "react";
+import { FaPaintBrush } from "react-icons/fa";
 
 export default function ThemeDd() {
-  const { theme, setTheme } = useTheme()
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    document.querySelector('html').className = theme
-  }, [theme])
+    document.querySelector("html").className = theme;
+  }, [theme]);
 
   return (
     <DropDownComplete
+      title="Theme"
       trigger={
         <div className="flex gap-3 items-center justify-center hover:text-primary">
           <FaPaintBrush /> <p>Theme</p>
@@ -36,5 +37,5 @@ export default function ThemeDd() {
         <DropdownMenuRadioItem value="earth">Earth</DropdownMenuRadioItem>
       </DropdownMenuRadioGroup>
     </DropDownComplete>
-  )
+  );
 }

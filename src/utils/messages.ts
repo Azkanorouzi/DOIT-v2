@@ -36,8 +36,9 @@ export const getDefaultGenerateSuccessMessage = ({
   numEnvironmentsCreated,
   numGoalsCreated,
   numTodosCreated,
+  numOrganizationsCreated,
 }): ToastMessage => {
   return {
-    message: `Created ${numTodosCreated} todos, ${numProjectsCreated} projects, ${numTagsCreated} tags, ${numGoalsCreated} goals, ${numTagsCreated} tags and ${numEnvironmentsCreated} environments. `,
+    message: `Created ${numTodosCreated} todos, ${numProjectsCreated} projects, ${numTagsCreated} tags, ${numGoalsCreated} goals, ${numTagsCreated} tags, ${numEnvironmentsCreated} environments. and ${numOrganizationsCreated} organiztions created`,
   };
 };

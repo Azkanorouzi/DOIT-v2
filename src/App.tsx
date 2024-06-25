@@ -1,39 +1,39 @@
-import AppRoutes from './config/Routes'
-import { BrowserRouter } from 'react-router-dom'
-import LoaderBig from './components/ui/LoaderBig'
-import { useRemoveLoader } from './hooks/useLoader'
-import useCurrentUser from './hooks/useCurrentUser'
-import { Toaster } from 'react-hot-toast'
-import { sayHi } from './utils/sayHi'
-import { useEffect } from 'react'
-import { useTheme } from './contexts/ThemeContext'
+import AppRoutes from "./config/Routes";
+import { BrowserRouter } from "react-router-dom";
+import LoaderBig from "./components/ui/LoaderBig";
+import { useRemoveLoader } from "./hooks/useLoader";
+import useCurrentUser from "./hooks/useCurrentUser";
+import { Toaster } from "react-hot-toast";
+import { sayHi } from "./utils/sayHi";
+import { useEffect } from "react";
+import { useTheme } from "./contexts/ThemeContext";
 
 function App() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   const {
     isLoading: isGettingCurrentUser,
     isAuthenticated,
     data,
-  } = useCurrentUser()
+  } = useCurrentUser();
   // For removing the loader when loading's finished
   useRemoveLoader({
-    animationClass: 'disappear',
+    animationClass: "disappear",
     isLoading: isGettingCurrentUser,
-    selectorClass: '.loaderBig',
-  })
+    selectorClass: ".loaderBig",
+  });
 
   useEffect(() => {
     !isGettingCurrentUser &&
       isAuthenticated &&
-      sayHi(isAuthenticated, data?.username)
-  }, [isGettingCurrentUser, isAuthenticated, data?.username])
+      sayHi(isAuthenticated, data?.username);
+  }, [isGettingCurrentUser, isAuthenticated, data?.username]);
 
   return (
     <BrowserRouter>
       <Toaster
         gutter={16}
         position="bottom-center"
-        containerStyle={{ margin: '8px' }}
+        containerStyle={{ margin: "8px" }}
         toastOptions={{
           success: {
             duration: 3000,
@@ -47,7 +47,7 @@ function App() {
       <LoaderBig />
       <AppRoutes />
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

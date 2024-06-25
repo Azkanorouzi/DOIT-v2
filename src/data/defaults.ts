@@ -1,4 +1,11 @@
-import { Environment, Goal, Project, Tags, Todo } from "@/utils/definitions";
+import {
+  Environment,
+  Goal,
+  Organization,
+  Project,
+  Tags,
+  Todo,
+} from "@/utils/definitions";
 
 //  (get user id and pass it to) Todos -> (default todos would create two arrays) Projects -> we pass in ids to Goal -> Environments we pass in all the previous ids to environments ids -> tags
 
@@ -250,7 +257,7 @@ export const getDefaultEnvironments = ({
       description:
         "This is an example environment, we use environment to store related projects/todos",
       todo_ids: [],
-      collab_ids: [],
+      organization_id: null,
       project_ids: projectIds,
       icon: "fa-solid fa-dragon",
     },
@@ -258,7 +265,7 @@ export const getDefaultEnvironments = ({
       user_id: userId,
       title: "Education",
       description: "Your School Stuff",
-      collab_ids: [],
+      organization_id: null,
       todo_ids: [],
       project_ids: [],
       icon: "fa-solid fa-book",
@@ -301,6 +308,7 @@ export const getDefaultTags = ({ userId, goalIds }): Tags[] => {
       goal_ids: goalIds,
       title: "Learning",
       description: "Learning a new thing?",
+      organization_id: null,
     },
     {
       user_id: userId,
@@ -308,6 +316,23 @@ export const getDefaultTags = ({ userId, goalIds }): Tags[] => {
       goal_ids: goalIds,
       title: "Health",
       description: "Become more healthy with doit",
+      organization_id: null,
+    },
+  ];
+};
+
+export const getDefaultOrganizations = ({ userId }): Organization[] => {
+  return [
+    {
+      creator: userId,
+      name: "Office",
+      participants: [userId],
+      read: [],
+      write: [],
+      admin: [],
+      logo: "",
+      description:
+        "This is a test organization, you can use organizations to collaborate with people, every organization has a creator, the creator can give read write or admin access to the participants, admin participants can send invite to other collaborators to join the organiztion, by default you will userId",
     },
   ];
 };

@@ -22,7 +22,7 @@ export interface Environment {
   icon: string;
   project_ids: string[];
   todo_ids: string[];
-  collab_ids: string[];
+  organization_id: string;
 }
 
 export interface Project {
@@ -72,6 +72,7 @@ export interface Tags {
   icon: string;
   goal_ids: string[];
   created_at?: Date | null | string;
+  organization_id: string;
 }
 
 export interface Goal {
@@ -83,6 +84,18 @@ export interface Goal {
   project_ids: string[];
   todo_ids: string[];
   created_at?: Date | null | string;
+}
+
+export interface Organization {
+  id?: string;
+  name: string;
+  creator: string;
+  participants: string[];
+  logo: string;
+  description: string;
+  read: string[];
+  write: string[];
+  admin: string[];
 }
 
 export interface ToastMessage {

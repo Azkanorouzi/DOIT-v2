@@ -4,24 +4,26 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from './dropdown-menu'
-import { ReactNode } from 'react'
+} from "./dropdown-menu";
+import { ReactNode } from "react";
 
 export default function DropDownComplete({
   trigger,
   children,
+  title,
 }: {
-  trigger: string | ReactNode
-  children: ReactNode
+  trigger: string | ReactNode;
+  children: ReactNode;
+  title: string;
 }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuLabel>{title}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {children}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

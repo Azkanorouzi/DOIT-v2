@@ -3,6 +3,7 @@ import Dashboard from "../dashboard/Dashboard";
 import DashboardExplorer from "../dashboard/dashboardNav/DashboardExplorer";
 import DashboardNavBar from "../dashboard/dashboardNav/DashboardNavBar";
 import DashboardSideBar from "../dashboard/DashboardSideBar";
+import DashboardStatusBar from "../dashboard/DashboardStatusBar";
 
 export default function DashboardLayout() {
   return (
@@ -13,7 +14,9 @@ export default function DashboardLayout() {
       <DashboardSideBar />
       <DashboardNavBar />
       <DashboardExplorer />
+
       <Dashboard>
+        <DashboardStatusBar />
         <Outlet />
       </Dashboard>
     </div>

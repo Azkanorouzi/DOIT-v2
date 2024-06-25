@@ -1,13 +1,13 @@
-import { useGetCurUserQuery } from '@/redux-cake/auth-slices/authSlice'
+import { useGetCurUserQuery } from "@/redux-cake/auth-slices/authSlice";
 
 export default function useCurrentUser() {
-  const { data, isLoading } = useGetCurUserQuery(null)
+  const { data, isLoading } = useGetCurUserQuery(null);
   return {
     id: data?.user?.id,
-    isAuthenticated: data?.user?.role === 'authenticated',
+    isAuthenticated: data?.user?.role === "authenticated",
     email: data?.user?.email,
     data: data?.user?.user_metadata,
 
     isLoading,
-  }
+  };
 }

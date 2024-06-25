@@ -5,6 +5,7 @@ const apiSlice = createApi({
   baseQuery: fakeBaseQuery(),
   tagTypes: [
     "user",
+    "organizations",
     "environments",
     "projects",
     "todos",

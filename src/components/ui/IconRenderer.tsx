@@ -5,6 +5,7 @@ import { IoMdDoneAll } from "react-icons/io";
 import { LuHome } from "react-icons/lu";
 import {
   FaBox,
+  FaDumbbell,
   FaExclamation,
   FaLeaf,
   FaRegCalendarCheck,
@@ -14,7 +15,7 @@ import {
 import { FaRunning } from "react-icons/fa";
 import { IoBookSharp } from "react-icons/io5";
 import { RiInboxArchiveFill } from "react-icons/ri";
-import { MdNotificationImportant } from "react-icons/md";
+import { MdNotificationImportant, MdWork } from "react-icons/md";
 
 // Interfaces
 interface IconEntry {
@@ -40,6 +41,8 @@ const iconMap: IconMap = {
   important: { component: FaExclamation, name: "Important" },
   passed: { component: MdNotificationImportant, name: "passed" },
   today: { component: FaSun, name: "today" },
+  work: { component: MdWork, name: "work" },
+  dumbbell: { component: FaDumbbell, name: "dumbell" },
 };
 
 // This function will take in a icon component name like COMPONENT:CgProfile and it render it
@@ -51,8 +54,9 @@ export const IconRenderer = ({
   className?: string;
 }) => {
   const extractedName = iconName.includes(":")
-    ? iconName.slice(iconName.indexOf(":"))
+    ? iconName.slice(iconName.indexOf(":") + 1)
     : iconName;
+  console.log(extractedName, "extractedName");
   const IconComponent = iconMap[extractedName]?.component;
 
   if (!IconComponent) {

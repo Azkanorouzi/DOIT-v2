@@ -1,9 +1,12 @@
 import { IconRenderer } from "@/components/ui/IconRenderer";
 import { specialEnvironments } from "@/utils/definitions";
 import { ReactNode, useContext } from "react";
-import Tasks, { TaskContext } from "./Tasks";
+import Tasks, { TaskContext } from "../Tasks";
 import { useTheme } from "@/contexts/ThemeContext";
 import { motion } from "framer-motion";
+import { useCurContainer } from "@/contexts/ContainerContext";
+import { useNavigate } from "react-router-dom";
+import { useCurOrganization } from "@/contexts/OrganizationContext";
 
 type TypeColors = {
   [key in specialEnvironments]: string; // You can change `string` to any type you need
@@ -34,8 +37,11 @@ export const Environment = ({
   id?: string;
   children: ReactNode;
 }) => {
+  const navigate = useNavigate();
+  const { setCurContainerId } = useCurContainer();
   const { selected, setSelected, editOpen, setEditOpen } =
     useContext(TaskContext);
+  const { curOrganization } = useCurOrganization();
   // Changing the theme for environments so that the text is visible
   const { theme } = useTheme();
   // ================= Classes
@@ -49,14 +55,6 @@ export const Environment = ({
   const isEditOpen =
     (editOpen === id && editOpen.length) ||
     (editOpen === type && editOpen.length);
-  console.log(
-    editOpen,
-    "this is edit open",
-    id,
-    "this is id",
-    type,
-    "this is type",
-  );
   // ================= Animation
   const envItem = {
     hidden: { opacity: 0, filter: "blur(10px)", transform: "scale(.7)" },
@@ -76,6 +74,8 @@ export const Environment = ({
         onClick={() => {
           setSelected(id.length ? id : type);
           setEditOpen("");
+          id && setCurContainerId(id);
+          navigate(`/dashboard/${curOrganization}/todo/${name}`);
         }}
       >
         <div className="flex">

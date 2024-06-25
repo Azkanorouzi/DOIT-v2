@@ -1,6 +1,13 @@
-import Tasks from "./Tasks";
+import { useGetUserEnvironments } from "@/redux-cake/taskSlice/environmentsSlice";
+import Tasks from "../Tasks";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function Environments() {
+  // const { id, isLoading: isUserLoading } = useCurrentUser();
+  // const { data, isLoading: isEnvLoading } = useGetUserEnvironments({
+  //   userId: id,
+  // });
+
   return (
     <Tasks type="environment">
       {/* ====== Default environments ====== */}

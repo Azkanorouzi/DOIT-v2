@@ -7,12 +7,18 @@ import { GoGoal } from "react-icons/go";
 import { SlCalender } from "react-icons/sl";
 import { IoIosTimer } from "react-icons/io";
 import { MdDoneAll } from "react-icons/md";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useCurOrganization } from "@/contexts/OrganizationContext";
 
 export default function DashboardSideBar() {
+  const { curOrganization } = useCurOrganization();
   const { mode } = useParams();
+  const [searchParam] = useSearchParams();
+
   const [hovered, setHovered] = useState(false);
-  // TODO: useCurrentOrganization must be implemented imported here and whenever changes we should change the url
+  const isMedalOpen = searchParam.get("medalModal") === "open";
+  const isFriendsOpen = searchParam.get("friendsModal") === "open";
+  const isSettingsOpen = searchParam.get("settingsModal") === "open";
 
   return (
     <motion.aside
@@ -28,42 +34,42 @@ export default function DashboardSideBar() {
         <div className="flex flex-col gap-5">
           <DashboardNavLink
             icon={<MdDoneAll />}
-            linkTo="/dashboard/personal/todo"
+            linkTo={`/dashboard/${curOrganization}/todo/today`}
             hovered={hovered}
             text="Todos"
             active={mode === "todo"}
           />
           <DashboardNavLink
             icon={<FaChartSimple />}
-            linkTo="/dashboard/personal/charts"
+            linkTo={`/dashboard/${curOrganization}/charts`}
             hovered={hovered}
             text="Charts"
             active={mode === "charts"}
           />
           <DashboardNavLink
             icon={<SlCalender />}
-            linkTo="/dashboard/personal/calendar"
+            linkTo={`/dashboard/${curOrganization}/calendar`}
             hovered={hovered}
             text="Calendar"
-            active={mode === "calender"}
+            active={mode === "calendar"}
           />
           <DashboardNavLink
             icon={<GoGoal />}
-            linkTo="/dashboard/personal/goals"
+            linkTo={`/dashboard/${curOrganization}/goals`}
             hovered={hovered}
             text="Goals"
             active={mode === "goals"}
           />
           <DashboardNavLink
             icon={<IoIosTimer />}
-            linkTo="/dashboard/personal/pomodoro"
+            linkTo={`/dashboard/${curOrganization}/timer`}
             hovered={hovered}
-            text="Pomodoro"
-            active={mode === "pomodoro"}
+            text="timer"
+            active={mode === "timer"}
           />
           <DashboardNavLink
             icon={<FaDollarSign />}
-            linkTo="/dashboard/personal/expenses"
+            linkTo={`/dashboard/${curOrganization}/finance`}
             hovered={hovered}
             text="Finance"
             active={mode === "finance"}
@@ -73,24 +79,24 @@ export default function DashboardSideBar() {
         <div className="flex gap-5 flex-col  border-primary">
           <DashboardNavLink
             icon={<FaMedal />}
-            linkTo="/dashboard/personal/medal"
+            linkTo={`?medalModal=open`}
             hovered={hovered}
             text="Medal"
-            active={mode === "medal"}
+            active={isMedalOpen}
           />
           <DashboardNavLink
             icon={<FaPeopleGroup />}
             text="Friends"
-            linkTo="/dashboard/personal/friends"
+            linkTo={`?friendsModal=open`}
             hovered={hovered}
-            active={mode === "freinds"}
+            active={isFriendsOpen}
           />
           <DashboardNavLink
             hovered={hovered}
-            linkTo="/settings"
+            linkTo="?settingsModal=open"
             icon={<FaGear />}
             text="Settings"
-            active={mode === "settings"}
+            active={isSettingsOpen}
           />
         </div>
       </nav>

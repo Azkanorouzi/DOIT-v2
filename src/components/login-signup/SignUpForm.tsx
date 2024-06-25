@@ -117,6 +117,7 @@ export default function SignUpForm({
       numTagsCreated,
       numGoalsCreated,
       numEnvironmentsCreated,
+      numOrganizationsCreated,
     } = await startGeneratingDefaults({ id: user.id });
 
     const defaultSuccessMessage = getDefaultGenerateSuccessMessage({
@@ -125,6 +126,7 @@ export default function SignUpForm({
       numTagsCreated,
       numGoalsCreated,
       numEnvironmentsCreated,
+      numOrganizationsCreated,
     });
 
     toast.success(
