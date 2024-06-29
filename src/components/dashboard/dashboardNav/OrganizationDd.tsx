@@ -1,15 +1,16 @@
 import DropDownComplete from "@/components/ui/DropDownComplete";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import { useGetUserOrganizations } from "@/redux-cake/taskSlice/organizationsSlice";
 import { Organization } from "@/utils/definitions";
 import { FaPerson } from "react-icons/fa6";
 import { SlOrganization } from "react-icons/sl";
 import OrganizationDdItem from "./OrganizationDdItem";
 import LoaderSmall from "@/components/ui/LoaderSmall";
+import { useCurOrganization } from "@/contexts/OrganizationContext";
 
 export default function OrganizationDd() {
   const { id } = useCurrentUser();
-  const { data, isLoading } = useGetUserOrganizations({ userId: id });
+  const { organizations, isLoadingOrganization } = useCurOrganization();
+
   return (
     <DropDownComplete
       trigger={
@@ -20,7 +21,7 @@ export default function OrganizationDd() {
       }
       title="Organization"
     >
-      {isLoading && (
+      {isLoadingOrganization && (
         <div className="p-5 flex justify-center items-center">
           <LoaderSmall />
         </div>
@@ -39,12 +40,17 @@ export default function OrganizationDd() {
           participants: [],
           id: "",
         }}
+        key={"123"}
       />
 
       {/* ====== Loaded organization */}
-      {data?.map((organization: Organization) => {
-        console.log(organization.logo);
-        return <OrganizationDdItem organization={organization} />;
+      {organizations?.map((organization: Organization) => {
+        return (
+          <OrganizationDdItem
+            organization={organization}
+            key={organization.id}
+          />
+        );
       })}
     </DropDownComplete>
   );

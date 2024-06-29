@@ -5,10 +5,11 @@ import { TaskContext } from "./Tasks";
 
 export default function EditButtons({ id }: { id: string }) {
   // Need type to render different icons based on the type of task
-  const { editOpen } = useContext(TaskContext);
+  const { editOpen, selected } = useContext(TaskContext);
   const editCloseClass = "opacity-0 blur-xl";
   const editOpenClass = "opacity-1 blur-0";
   const editClass = editOpen !== id ? editCloseClass : editOpenClass;
+  const isSelected = selected === id && editOpen !== id;
   return (
     <>
       {/* TODO: delete button  */}
@@ -26,7 +27,9 @@ export default function EditButtons({ id }: { id: string }) {
       </button>
 
       {/* info button  */}
-      <button className={`transition-all ${editOpenClass}`}>
+      <button
+        className={`transition-all ${isSelected ? "opacity-0" : "opacity-100"}`}
+      >
         <FaQuestion />
       </button>
     </>

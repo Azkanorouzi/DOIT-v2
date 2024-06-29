@@ -1,4 +1,14 @@
-import React, { ReactNode, useContext, useState, createContext } from "react";
+import useCurrentUser from "@/hooks/useCurrentUser";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import { useGetUserOrganizations } from "@/redux-cake/taskSlice/organizationsSlice";
+import { Organization } from "@/utils/definitions";
+import React, {
+  ReactNode,
+  useContext,
+  createContext,
+  useEffect,
+  useMemo,
+} from "react";
 import { useParams } from "react-router-dom";
 
 const OrganizationContext = createContext(
@@ -6,6 +16,9 @@ const OrganizationContext = createContext(
     curOrganizationId: string;
     curOrganization: string;
     setCurOrganizationId: React.Dispatch<React.SetStateAction<string>>;
+    curOrganizationData: Organization[];
+    organizations: Organization[];
+    isLoadingOrganization: boolean;
   },
 );
 
@@ -14,13 +27,46 @@ export default function OrganizationContextProvider({
 }: {
   children: ReactNode;
 }) {
-  const [curOrganizationId, setCurOrganizationId] = useState("");
-  // ===== Auto navigation
+  const { id } = useCurrentUser();
+  const { data, isLoading: isLoadingOrganization } = useGetUserOrganizations({
+    userId: id,
+  });
+  const [curOrganizationId, setCurOrganizationId] = useLocalStorage(
+    "curOrganizationId",
+    "",
+  );
+
   const params = useParams();
+  // This usememo is necessary for actually returning the memo that we want
+  const curOrganizationData = useMemo(() => {
+    const cur = data?.filter((org) => org.id === curOrganizationId) ?? [];
+    if (
+      cur[0]?.name?.toLowerCase() !== params?.organization?.toLowerCase() &&
+      cur.length
+    ) {
+      console.log(data, "data");
+      console.log(params?.organization, "organiztion name");
+      return [
+        data?.filter(
+          (org) =>
+            org?.name?.toLowerCase() === params?.organization?.toLowerCase(),
+        )[0],
+      ];
+    }
+    return cur;
+  }, [curOrganizationId, data, params]);
+
+  // ===== Auto navigation
+  console.log(params, "params");
+
+  useEffect(() => {}, [params?.organization, curOrganizationData]);
 
   return (
     <OrganizationContext.Provider
       value={{
+        organizations: data,
+        isLoadingOrganization,
+        curOrganizationData,
         curOrganizationId,
         curOrganization: params?.organization,
         setCurOrganizationId,

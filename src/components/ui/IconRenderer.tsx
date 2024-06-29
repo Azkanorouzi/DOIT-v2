@@ -53,10 +53,9 @@ export const IconRenderer = ({
   iconName: string;
   className?: string;
 }) => {
-  const extractedName = iconName.includes(":")
-    ? iconName.slice(iconName.indexOf(":") + 1)
+  const extractedName = iconName?.includes(":")
+    ? iconName?.slice(iconName?.indexOf(":") + 1)
     : iconName;
-  console.log(extractedName, "extractedName");
   const IconComponent = iconMap[extractedName]?.component;
 
   if (!IconComponent) {

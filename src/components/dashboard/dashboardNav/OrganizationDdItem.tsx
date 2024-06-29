@@ -7,6 +7,8 @@ import { IoEyeSharp } from "react-icons/io5";
 import { GrUserAdmin } from "react-icons/gr";
 import { useNavigate, useParams } from "react-router-dom";
 import useCurrentUser from "@/hooks/useCurrentUser";
+import { getOrganizationAccess } from "@/utils/getOrganiztionAccess";
+import { useCurOrganization } from "@/contexts/OrganizationContext";
 
 export default function OrganizationDdItem({
   organization,
@@ -18,12 +20,12 @@ export default function OrganizationDdItem({
   const { mode, container, organization: curOrganization } = useParams();
   const navigate = useNavigate();
   const { id } = useCurrentUser();
+  const { setCurOrganizationId } = useCurOrganization();
 
   const Icon = !logo ? IconRenderer({ iconName: organization?.logo }) : logo;
   // ===== Checking user access
-  const haveReadAccess = organization?.read.includes(id);
-  const haveWriteAccess = organization?.write.includes(id);
-  const haveAdminAccess = organization?.admin.includes(id);
+  const { haveWriteAccess, haveReadAccess, haveAdminAccess } =
+    getOrganizationAccess({ id, organization });
 
   return (
     <DropdownMenuItem
@@ -33,6 +35,7 @@ export default function OrganizationDdItem({
         url += `/${organization?.name?.toLowerCase()}`;
         if (mode) url += `/${mode}`;
         if (container) url += `/${container}`;
+        setCurOrganizationId(organization.id);
         navigate(url);
       }}
     >

@@ -18,9 +18,9 @@ export default function ThemeDd() {
     <DropDownComplete
       title="Theme"
       trigger={
-        <div className="flex gap-3 items-center justify-center hover:text-primary">
+        <button className="flex gap-3 items-center justify-center hover:text-primary">
           <FaPaintBrush /> <p>Theme</p>
-        </div>
+        </button>
       }
     >
       <DropdownMenuRadioGroup

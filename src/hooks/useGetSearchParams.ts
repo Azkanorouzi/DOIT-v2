@@ -1,11 +1,11 @@
-import { useLocation } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
 
-function useGetSearchParams(paramName: string) {
-  const location = useLocation()
-  const params = new URLSearchParams(location.search)
-  const paramValue = params.get('method')
+function useGetSearchParams() {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const paramValue = params.get("method");
 
-  return paramValue
+  return paramValue;
 }
 
-export default useGetSearchParams
+export default useGetSearchParams;
