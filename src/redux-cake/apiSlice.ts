@@ -12,6 +12,7 @@ const apiSlice = createApi({
     "tags",
     "goals",
     "subtodos",
+    "status",
   ],
   endpoints: () => {
     return {};

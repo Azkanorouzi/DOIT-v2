@@ -14,6 +14,7 @@ interface TasksProps {
 export default function Tasks({ children, type }: TasksProps) {
   const [editOpen, setEditOpen] = useState<string>("");
   const [selected, setSelected] = useState<string>("today");
+
   return (
     <TaskContext.Provider
       value={{ editOpen, setEditOpen, selected, setSelected, type }}

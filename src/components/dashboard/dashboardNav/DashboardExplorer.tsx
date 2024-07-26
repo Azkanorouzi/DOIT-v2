@@ -10,7 +10,7 @@ export default function DashboardExplorer() {
   };
   return (
     <motion.nav
-      className="shadow-primary shadow-md row-start-1 col-start-2 col-end-6 row-end-13 flex flex-col gap-5 pl-5 pr-2 py-4 overflow-y-scroll"
+      className="shadow-primary shadow-md row-start-1 col-start-2 col-end-6 row-end-13 flex flex-col gap-5 pl-5 pr-2 py-4 overflow-y-scroll "
       variants={navContainer}
       initial="hidden"
       animate="show"

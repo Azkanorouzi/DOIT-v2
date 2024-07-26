@@ -28,13 +28,13 @@ export const Environment = ({
   type = "normal",
   name = "DOIT",
   icon = "",
-  id = "",
+  envId = "",
   children,
 }: {
   type?: specialEnvironments;
   name?: string;
   icon?: string;
-  id?: string;
+  envId?: string;
   children: ReactNode;
 }) => {
   const navigate = useNavigate();
@@ -49,11 +49,11 @@ export const Environment = ({
     theme !== "focus" && theme !== "earth"
       ? "bg-primary"
       : "bg-primary text-black";
-  const activeClass = `w-[200px] ${activeBgColor} border-primary`;
+  const activeClass = `w-[80%] ${activeBgColor} border-primary`;
   // ================= isActive
-  const isActive = id === selected || type === selected;
+  const isActive = envId === selected || type === selected;
   const isEditOpen =
-    (editOpen === id && editOpen.length) ||
+    (editOpen === envId && editOpen.length) ||
     (editOpen === type && editOpen.length);
   // ================= Animation
   const envItem = {
@@ -66,15 +66,16 @@ export const Environment = ({
     iconName: icon ? icon : type,
     className: "text-2xl mr-3",
   });
+  console.log("This is the id 🐶", envId);
   return (
     <motion.article className="flex gap-2 relative" variants={envItem}>
       <button
-        className={` border-l z-10  rounded-r-full border-b p-3 rounded-xl flex justify-between hover:border-primary transition-color hover:bg-primary hover:text-white items-center transition-all  ${isEditOpen ? "rounded-l-full w-[50px] bg-primary" : `${isActive ? activeClass : `bg-secondary  border-${typeColors[type]} w-[170px]`}`}`}
+        className={` border-l z-10  rounded-r-full border-b p-3 rounded-xl flex justify-between hover:border-primary transition-color hover:bg-primary hover:text-white items-center transition-all  ${isEditOpen ? "rounded-l-full w-[50px] bg-primary" : `${isActive ? activeClass : `bg-secondary  border-${typeColors[type]} w-[180px]`}`}`}
         style={{ transition: "all .3s" }}
         onClick={() => {
-          setSelected(id.length ? id : type);
+          setSelected(envId.length ? envId : type);
           setEditOpen("");
-          id && setCurContainerId(id);
+          envId && setCurContainerId(envId);
           navigate(`/dashboard/${curOrganization}/todo/${name}`);
         }}
       >
@@ -87,7 +88,7 @@ export const Environment = ({
           </strong>
         </div>
 
-        {isActive && <Tasks.EditMenuButton id={id.length ? id : type} />}
+        {isActive && <Tasks.EditMenuButton id={envId.length ? envId : type} />}
       </button>
 
       <div className="flex gap-3 absolute right-0 items-center justify-center bottom-0 top-0">

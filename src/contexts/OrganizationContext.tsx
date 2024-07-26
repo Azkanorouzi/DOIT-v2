@@ -67,7 +67,7 @@ export default function OrganizationContextProvider({
         organizations: data,
         isLoadingOrganization,
         curOrganizationData,
-        curOrganizationId,
+        curOrganizationId: curOrganizationId?.length ? curOrganizationId : null,
         curOrganization: params?.organization,
         setCurOrganizationId,
       }}

@@ -118,6 +118,7 @@ export const extendedApiSlice = apiSlice.injectEndpoints({
           );
           return { data };
         },
+        invalidatesTags: ["user"],
       }),
     };
   },

@@ -1,8 +1,8 @@
-import { RotatingLines } from 'react-loader-spinner'
+import { RotatingLines } from "react-loader-spinner";
 
 export default function LoaderSmall() {
   return (
-    <div className="stroke-secondary-foreground">
+    <span className="stroke-secondary-foreground">
       <RotatingLines
         visible={true}
         width="20"
@@ -11,6 +11,6 @@ export default function LoaderSmall() {
         animationDuration="0.75"
         ariaLabel="rotating-lines-loading"
       />
-    </div>
-  )
+    </span>
+  );
 }
